@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.2.0-beta1",
+    "instal": "^0.0.1-security",
+    "install": "^0.13.0",
+    "react-bootstrap": "^2.4.0",
+    "react-router-dom": "^6.3.0"
+  }
+}
