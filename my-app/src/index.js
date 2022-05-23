@@ -2,16 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './index.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import reportWebVitals from './reportWebVitals';
-import Register from "./register/register"
+import Login from './components/login.component'
+import Register from './components/register.component'
 import App from "./App"
 
 export default function Index() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route index element={<App/>} />
-        <Route path="register" element={<Register/>} />
+        <Route index element={<App/>} />
+        <Route path="/register" element={<Register/>} />
+        <Route path="/Login" element={<Login/>} />
       </Routes>
     </BrowserRouter>
   );
