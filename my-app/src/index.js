@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import Login from './components/login.component'
 import Register from './components/register.component'
 import App from "./App"
+import Setup from "./setup_profil/setup"
 
 export default function Index() {
   return (
@@ -15,6 +16,7 @@ export default function Index() {
         <Route index element={<App/>} />
         <Route path="/register" element={<Register/>} />
         <Route path="/Login" element={<Login/>} />
+        <Route path="/setup" element={<Setup/>} />
       </Routes>
     </BrowserRouter>
   );
