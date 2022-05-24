@@ -8,6 +8,9 @@ export default class SignUp extends Component {
             password: '',
         }
 
+        this.buttonDisabled = true;
+        this.errormsg = "";
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }

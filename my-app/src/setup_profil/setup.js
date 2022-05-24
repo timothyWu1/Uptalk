@@ -11,7 +11,9 @@ export default function Setup() {
   
   returned = <Profil/>
   //test si la bio est configuré
-  returned = <Biographie/>
+  // returned = <Biographie/>
+
+  //test si 
 
 
   return (

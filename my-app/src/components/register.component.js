@@ -1,5 +1,7 @@
 import React, { Component, useState } from "react";
 
+
+
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -8,6 +10,9 @@ export default class SignUp extends Component {
             password: '',
             repeatPassword: '',
         }
+
+        this.buttonDisabled = true;
+        this.errormsg = "";
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,41 +24,79 @@ export default class SignUp extends Component {
         this.setState(
             {[event.target.name] : event.target.value}
         );
-
-        // const button = document.getElementById("submit_button")
-        // if({[password]} !== this.state.repeatPassword){
-        //     button.disabled = true;
-        // } else {
-        //     button.disabled = false;
-        // }
-        
-
     }
 
     handleSubmit(event) {
-        alert('A email was submitted: ' + this.state.email + "\npassword = " + this.state.password  + "\nReapeat Password = " + this.state.repeatPassword);
         // alert('A email was submitted: ' + this.state);
-        var logemail = this.state.email;
-        var logpassword = this.state.password;
-        var logrepeatPassword = this.state.repeatPassword;
+        var email = this.state.email;
+        var password = this.state.password;
+        var repeatPassword = this.state.repeatPassword;
 
-        if (logpassword == logrepeatPassword) {
-            //test de la sécurité du mot de passe
+        if (password !== repeatPassword ) {
+            this.errormsg = ("les deux mots de passe ne correspondent pas")
+        } else if (password.length<6) {
+            this.errormsg = "le mot de passe est trop court"
+
+        } else if (password.length >100) {
+            this.errormsg = "le mot de passe est trop long"
+
+        } else if (email.length <6) {
+            this.errormsg = "l'email est trop court"
+
+        } else if (email.length > 254) {
+            this.errormsg = "l'email est trop long"
+            
+        } else if (/@/.test(email) === false) {
+            this.errormsg = "l'email n'est pas correct"
+
+        
+
+        } else  {
+            alert('A email was submitted: ' + this.state.email + "\npassword = " + this.state.password  + "\nReapeat Password = " + this.state.repeatPassword);
+            //test des caracteres spéciaux.
 
             //test si le mail est deja dans la base de données 
 
             //cryptage du mot de passe 
+            const bcrypt = require('bcrypt');
+
+            const hashPassword = async (password, saltRounds = 10) => {
+                try {
+                    // Generate a salt
+                    const salt = await bcrypt.genSalt(saltRounds);
+
+                    // Hash password
+                    return await bcrypt.hash(password, salt);
+                } catch (error) {
+                    console.log(error);
+                }
+
+                // Return null if error
+                return null;
+            };
+
+            this.errormsg = hashPassword
+
+
 
             // ajout du nouvel utilisateur dans la base de données
+
             var sql = "INSERT INTO login (email, password) VALUES (email, password)";
 
-        } else  {
-            alert("les deux mots de passe ne correspondent pas")
         }
+        alert(this.errormsg)
         event.preventDefault();
     } 
 
     render() {
+        const button = document.querySelector('button')
+        if (this.state.password !== this.state.repeatPassword){
+            button.disabled = true;
+            this.errormsg = "les mots de passe ne correspondent pas"
+        } else {
+            button.disabled = false;
+            this.errormsg = ""
+        }
         return (
             <div className="card">
                 <form onSubmit={this.handleSubmit} method="post">
@@ -79,6 +122,8 @@ export default class SignUp extends Component {
 
                     <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Register</button>
                 </form>
+
+                <p>{this.errormsg}</p>
 
                 <p className="forgot-password text-right">
                     Already registered <a href="/login">log in?</a>

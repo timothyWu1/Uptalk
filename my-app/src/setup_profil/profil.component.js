@@ -9,10 +9,15 @@ export default class SignUp extends Component {
             anniversaire: '',
             sexe: ''
         }
+        
+        this.buttonDisabled = true;
+        this.errormsg = "";
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    
 
     handleChange(event) {
 
@@ -34,6 +39,13 @@ export default class SignUp extends Component {
     } 
 
     render() {
+
+        if (this.state.nom.length < 2 || this.state.nom.length>25 || this.state.prenom.length < 2 || this.state.prenom.length>25 || this.state.anniversaire.length !== 10){
+            this.buttonDisabled = true;
+        } else {
+            this.buttonDisabled = false;
+        }
+
         return (
             <div className="card">
                 <form onSubmit={this.handleSubmit}  method="post" >
@@ -54,17 +66,20 @@ export default class SignUp extends Component {
 
                     <div class="form-check form-switch">
                         <p>Homme
-                            <input name="sexe" value={this.state.sexe} class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                            <input name="sexe" value={this.state.sexe} onChange={this.handleChange} class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
                             <label class="form-check-label" for="flexSwitchCheckDefault">Femme</label>
                         </p>
                     </div>
 
                     <label for="birthday">Birthday:
-                    <input name='anniversaire' type="date" id="anniversaire" ></input>
+                    <input value={this.state.password}  onChange={this.handleChange} name='anniversaire' type="date" id="anniversaire" ></input>
                     </label>
 
-                    <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Register</button>
+                    <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button" disabled={this.buttonDisabled}>Register</button>
                 </form>
+
+                {this.state.anniversaire.length}
+
 
                 <p className="forgot-password text-right">
                     Already registered <a href="/login">log in?</a>
