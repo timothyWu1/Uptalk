@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 
 export default class SignUp extends Component {
     constructor(props) {
@@ -33,11 +33,11 @@ export default class SignUp extends Component {
     handleSubmit(event) {
         alert('A email was submitted: ' + this.state.email + "\npassword = " + this.state.password  + "\nReapeat Password = " + this.state.repeatPassword);
         // alert('A email was submitted: ' + this.state);
-        var email = this.state.email;
-        var password = this.state.password;
-        var repeatPassword = this.state.repeatPassword;
+        var logemail = this.state.email;
+        var logpassword = this.state.password;
+        var logrepeatPassword = this.state.repeatPassword;
 
-        if (password == repeatPassword) {
+        if (logpassword == logrepeatPassword) {
             //test de la sécurité du mot de passe
 
             //test si le mail est deja dans la base de données 
@@ -45,6 +45,7 @@ export default class SignUp extends Component {
             //cryptage du mot de passe 
 
             // ajout du nouvel utilisateur dans la base de données
+            var sql = "INSERT INTO login (email, password) VALUES (email, password)";
 
         } else  {
             alert("les deux mots de passe ne correspondent pas")
