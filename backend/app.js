@@ -2,7 +2,26 @@ const express = require('express');
 
 const app = express();
 
-app.use(express.json());
+const mysql = require('mysql');
+
+const profileRoutes = require('./routes/profile');
+
+const userRoutes = require('./routes/user');
+
+const db = mysql.createConnection({
+
+   host: "localhost",
+
+   user: "root",
+
+   password: ""
+
+ });
+
+  db.connect(function(err) {
+   if (err) throw err;
+   console.log("Connecté à la base de données MySQL!");
+ });
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -11,22 +30,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/api/user_setup', (req, res, next) => {
+// app.use(bodyParser.json());
 
-});
+app.use('/api/profile', profileRoutes);
+app.use('/api/auth', userRoutes);
 
-app.get('/api/get_user', (req, res, next) => {
-  const stuff = [
-    {
-      user_id: '1',
-      firstname: 'Damien',
-      lastname: 'Drozd',
-      gender: 'homme',
-      birthday: "2001-08-09",
-    }
-  ];
-  res.status(200).json(stuff);
-});
 
  
 
