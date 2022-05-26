@@ -1,27 +1,37 @@
 const express = require('express');
 
-const app = express();
+var bodyParser = require('body-parser')
+var app = express()
 
-const mysql = require('mysql');
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+app.use(express.json());
+
+
+
 
 const profileRoutes = require('./routes/profile');
 
 const userRoutes = require('./routes/user');
 
-const db = mysql.createConnection({
+// const db = mysql.createConnection({
 
-   host: "localhost",
+//    host: "localhost",
 
-   user: "root",
+//    user: "root",
 
-   password: ""
+//    password: ""
 
- });
+//  });
 
-  db.connect(function(err) {
-   if (err) throw err;
-   console.log("Connecté à la base de données MySQL!");
- });
+//   db.connect(function(err) {
+//    if (err) throw err;
+//    console.log("Connecté à la base de données MySQL!");
+//  });
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -34,6 +44,7 @@ app.use((req, res, next) => {
 
 app.use('/api/profile', profileRoutes);
 app.use('/api/auth', userRoutes);
+
 
 
  

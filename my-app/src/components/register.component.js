@@ -26,7 +26,7 @@ export default class SignUp extends Component {
         );
     }
 
-    handleSubmit(event) {
+    handleSubmit(event)  {
         // alert('A email was submitted: ' + this.state);
         var email = this.state.email;
         var password = this.state.password;
@@ -52,20 +52,47 @@ export default class SignUp extends Component {
         
 
         } else  {
-            alert('A email was submitted: ' + this.state.email + "\npassword = " + this.state.password  + "\nReapeat Password = " + this.state.repeatPassword);
+            // alert('A email was submitted: ' + this.state.email + "\npassword = " + this.state.password  + "\nReapeat Password = " + this.state.repeatPassword);
             //test des caracteres spéciaux.
 
-            //test si le mail est deja dans la base de données 
+            //envoi de la requête sur le server 
 
-            //cryptage du mot de passe 
+            // POST request using fetch with error handling
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: password})
+            };
+            console.log(requestOptions)
+            fetch('http://localhost:3001/api/auth/signup', requestOptions)
+                .then(async response => {
+                    const isJson = response.headers.get('content-type')?.includes('application/json');
+                    const data = isJson && await response.json();
+
+                    // check for error response
+                    if (!response.ok) {
+                        // get error message from body or default to response status
+                        const error = (data && data.message) || response.status;
+                        return Promise.reject(error);
+                    }
+
+                    this.setState({ postId: data.id })
+                })
+                .catch(error => {
+                    this.setState({ errorMessage: error.toString() });
+                    console.error('There was an error!', error);
+                });
+
+            //vérification de la réponse du server sur
+
+            //envoi d'une requête de login de l'utilisateur
 
 
-            // ajout du nouvel utilisateur dans la base de données
-
-            var sql = "INSERT INTO login (email, password) VALUES (email, password)";
 
         }
-        alert(this.errormsg)
+        if (this.errormsg !== ""){
+            alert(this.errormsg)
+        }
         event.preventDefault();
     } 
 
