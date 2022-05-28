@@ -1,64 +1,52 @@
-const mysql = require('mysql');
+const mysql = require("../config/mysql");
 
 
 
-const Profile = function(profile) {
-  this.user_id = profile.user_id;
-  this.firstname = profile.firstname;
-  this.lastname = profile.lastname;
-  this.gender = profile.gender;
-  this.birthday = profile.birthday;
-  this.bio = profile.bio;
-};
-Profile.getById = (id, result) => {
-  sql.query(`SELECT * FROM profile WHERE id = ${id}`, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    } 
-    if (res.length) {
-      console.log("found profil: ", res[0]);
-      result(null, res[0]);
-      return;
-    }
-    // not found Tutorial with the id
-    result({ kind: "not_found" }, null);
-  });
-};
 
-Profile.getAll = (result) => {
-  let query = "SELECT * FROM profile";
-  sql.query(query, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-    console.log("profile: ", res);
-    result(null, res);
-  });
-};
-Profile.updateById = (id, tutorial, result) => {
-  sql.query(
-    "UPDATE profile SET firstname = ?, lastname = ?, gender = ?, birthday = ?, bio = ? WHERE id = ?",
-    [tutorial.firstname, tutorial.lastname, tutorial.gender, tutorial.birthday, tutorial.bio, id],
-    (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(null, err);
-        return;
-      }
-      if (res.affectedRows == 0) {
-        // not found Tutorial with the id
-        result({ kind: "not_found" }, null);
-        return;
-      }
-      console.log("updated tutorial: ", { id: id, ...tutorial });
-      result(null, { id: id, ...tutorial });
-    }
-  );
-};
+class Profile {
+  static addProfile = async (user_id) => {
+    const sql = "INSERT INTO profile (user_id) VALUES (?)";
 
+    const result = await mysql.query(sql, [user_id]).catch((err) => err.message);
+    return typeof result === "string" ? result : result[0];
+  };
+
+  static getProfileById = async (user_id) => {
+    const sql = "SELECT * FROM profile WHERE user_id = '?'";
+
+    con.query(sql, user_id).catch((err) => err.message);
+    console.log(result);
+    return typeof result === "string" ? result : result[0];
+  };
+
+  static getAllProfile = async () => {
+    const sql = "SELECT * FROM profile";
+
+    const result = mysql.query(sql).catch((err) => err.message);
+    return typeof result === "string" ? result : result[0];
+  };
+
+  static updateProfileById = async (user_id, firstname, lastname, gender, birthday, bio) => {
+    const sql = "UPDATE profile SET firstname = ?, lastname = ?, gender = ?, birthday = ?, bio = ? WHERE id = ?";
+    var values = [firstname, lastname, gender, birthday, bio, user_id] 
+
+    con.query(sql, values, function (err, result) {
+      if (err) throw err;
+      return result;
+    });
+  };
+
+  static updateProfileBioById = async (user_id, bio) => {
+    const sql = "UPDATE profile SET bio = ? WHERE id = ?";
+    var values = [bio, user_id] 
+
+    con.query(sql, values, function (err, result) {
+      if (err) throw err;
+      return result;
+    });
+  };
+
+} 
+  
 
 module.exports = Profile;
