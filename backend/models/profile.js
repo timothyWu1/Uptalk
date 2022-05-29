@@ -12,10 +12,9 @@ class Profile {
   };
 
   static getProfileById = async (user_id) => {
-    const sql = "SELECT * FROM profile WHERE user_id = '?'";
+    const sql = "SELECT * FROM profile WHERE user_id = ?";
 
-    con.query(sql, user_id).catch((err) => err.message);
-    console.log(result);
+    const result = await mysql.query(sql, user_id).catch((err) => err.message);
     return typeof result === "string" ? result : result[0];
   };
 
@@ -27,20 +26,20 @@ class Profile {
   };
 
   static updateProfileById = async (user_id, firstname, lastname, gender, birthday, bio) => {
-    const sql = "UPDATE profile SET firstname = ?, lastname = ?, gender = ?, birthday = ?, bio = ? WHERE id = ?";
+    const sql = "UPDATE profile SET firstname = ?, lastname = ?, gender = ?, birthday = ?, bio = ? WHERE user_id = ?";
     var values = [firstname, lastname, gender, birthday, bio, user_id] 
 
-    con.query(sql, values, function (err, result) {
+    mysql.query(sql, values, function (err, result) {
       if (err) throw err;
       return result;
     });
   };
 
   static updateProfileBioById = async (user_id, bio) => {
-    const sql = "UPDATE profile SET bio = ? WHERE id = ?";
+    const sql = "UPDATE profile SET bio = ? WHERE user_id = ?";
     var values = [bio, user_id] 
 
-    con.query(sql, values, function (err, result) {
+    mysql.query(sql, values, function (err, result) {
       if (err) throw err;
       return result;
     });

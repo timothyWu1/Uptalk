@@ -8,23 +8,20 @@ class Interet {
     const sql = "INSERT INTO interet (name) VALUES ?";
 
     const result = await mysql.query(sql, [name]).catch((err) => err.message);
-    console.log(result);
     return typeof result === "string" ? result : result[0];
   };
 
   static getInteretById = async (id) => {
     const sql = "SELECT * FROM interet WHERE id = '?'";
 
-    con.query(sql, id).catch((err) => err.message);
-    console.log(result);
+    mysql.query(sql, id).catch((err) => err.message);
     return typeof result === "string" ? result : result[0];
   };
 
 
   static getAllInteret = async () => {
     const sql = "SELECT * FROM interet";
-
-    const result = mysql.query(sql).catch((err) => err.message);
+    const result = await mysql.query(sql).catch((err) => err.message);
     return typeof result === "string" ? result : result[0];
   };
 
@@ -32,7 +29,7 @@ class Interet {
     const sql = "UPDATE interet SET name = ? WHERE id = ?";
     var values = [name,id]
 
-    con.query(sql, values, function (err, result) {
+    mysql.query(sql, values, function (err, result) {
       if (err) throw err;
       return result;
     });

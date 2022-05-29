@@ -12,10 +12,9 @@ class Recherche {
   };
 
   static getRechercheById = async (user_id) => {
-    const sql = "SELECT * FROM recherche WHERE user_id = '?'";
+    const sql = "SELECT * FROM recherche WHERE user_id = ?";
 
-    con.query(sql, user_id).catch((err) => err.message);
-    console.log(result);
+    const result = await mysql.query(sql, user_id).catch((err) => err.message);
     return typeof result === "string" ? result : result[0];
   };
 
@@ -30,7 +29,7 @@ class Recherche {
     const sql = "UPDATE recherche SET preference_gender = ?, zone_recherche = ?, age_min = ?, age_max = ? WHERE user_id = ?";
     var values = [preference_gender, zone_recherche, gender, age_min, age_max, user_id] 
 
-    con.query(sql, values, function (err, result) {
+    mysql.query(sql, values, function (err, result) {
       if (err) throw err;
       return result;
     });

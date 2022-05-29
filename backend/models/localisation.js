@@ -12,9 +12,9 @@ class Localisation {
   };
 
   static getLocalisationById = async (user_id) => {
-    const sql = "SELECT * FROM localisation WHERE id = '?'";
+    const sql = "SELECT * FROM localisation WHERE user_id = ?";
 
-    con.query(sql, user_id).catch((err) => err.message);
+    const result = await mysql.query(sql, user_id).catch((err) => err.message);
     return typeof result === "string" ? result : result[0];
   };
 
@@ -27,10 +27,10 @@ class Localisation {
   };
 
   static updateLocalisationById = async (user_id, longitude, lattitude) => {
-    const sql = "UPDATE localisation SET longitude = ?, lattitude = ? WHERE id = ?";
+    const sql = "UPDATE localisation SET longitude = ?, lattitude = ? WHERE user_id = ?";
     var values = [longitude, lattitude ,user_id]
 
-    con.query(sql, values, function (err, result) {
+    mysql.query(sql, values, function (err, result) {
       if (err) throw err;
       return result;
     });

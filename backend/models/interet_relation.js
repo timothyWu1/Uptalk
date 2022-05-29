@@ -12,9 +12,9 @@ class Interet_Relation {
   };
 
   static getInteret_RelationById = async (user_id) => {
-    const sql = "SELECT * FROM interet_relation WHERE user_id = '?'";
+    const sql = "SELECT * FROM interet_relation WHERE user_id = ?";
 
-    con.query(sql, user_id).catch((err) => err.message);
+    const result = await mysql.query(sql, user_id).catch((err) => err.message);
     return typeof result === "string" ? result : result[0];
   };
 
@@ -30,7 +30,7 @@ class Interet_Relation {
     const sql = "UPDATE interet_relation SET interet_id = ? WHERE user_id = ? AND interet_nb = ?";
     var values = [interet_id,user_id, interet_nb]
 
-    con.query(sql, values, function (err, result) {
+    mysql.query(sql, values, function (err, result) {
       if (err) throw err;
       return result;
     });

@@ -13,9 +13,9 @@ class Question {
   };
 
   static getQuestionById = async (id) => {
-    const sql = "SELECT * FROM question WHERE id = '?'";
+    const sql = "SELECT * FROM question WHERE id = ?";
 
-    con.query(sql, id).catch((err) => err.message);
+    const result = await mysql.query(sql, id).catch((err) => err.message);
     console.log(result);
     return typeof result === "string" ? result : result[0];
   };
@@ -24,7 +24,7 @@ class Question {
   static getAllQuestion = async () => {
     const sql = "SELECT * FROM question";
 
-    const result = mysql.query(sql).catch((err) => err.message);
+    const result = await mysql.query(sql).catch((err) => err.message);
     return typeof result === "string" ? result : result[0];
   };
 
@@ -32,7 +32,7 @@ class Question {
     const sql = "UPDATE question SET name = ? WHERE id = ?";
     var values = [name,id]
 
-    con.query(sql, values, function (err, result) {
+    mysql.query(sql, values, function (err, result) {
       if (err) throw err;
       return result;
     });

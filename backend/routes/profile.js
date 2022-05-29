@@ -6,13 +6,31 @@ const ProfileController = require('../controllers/profile');
 
 
 
-router.post('/', ProfileController.createProfile);
 
-router.get('/:id', ProfileController.getOneProfile);
+router.get('/:id', ProfileController.getProfileById);
 
-// router.put('/:id', ProfileController.modifyProfile);
+router.get('/localisation/:id', ProfileController.getLocalisationById);
 
-// router.get('/', ProfileController.getAllProfiles);
+router.get('/recherche/:id', ProfileController.getRechercheById);
+
+router.get('/interet/:id', ProfileController.getInteretById);
+
+router.get('/question/:id', ProfileController.getQuestionById);
+
+
+
+//routes de modifications
+
+router.post('/:id', ProfileController.updateProfileById);
+
+router.post('/localisation/:id', ProfileController.updateLocalisationById);
+
+router.post('/recherche/:id', ProfileController.updateRechercheById);
+
+router.post('/interet/:id', ProfileController.updateInteretById);
+
+router.post('/question/:id', ProfileController.updateQuestionById);
+ 
 
 
 
