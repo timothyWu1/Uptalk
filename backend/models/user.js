@@ -1,50 +1,48 @@
-const mysql = require('mysql');
+const mysql = require("../config/mysql");
 
 
-// const stuff = [
-//     {
-//       email: 'string , required', unique
-//       password: 'string, required'
-//     }
 
-// constructor
-const User = function(user) {
-  this.email = user.email;
-  this.password = user.password;
-};
-User.save = (newUser, result) => {
-  sql.query("INSERT INTO user (email, password) VALUES ('?', '?')", [newUser.email, newUser.password]), (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    }
-    console.log("created tutorial: ", { id: res.insertId, ...newTutorial });
-    sql.query("INSERT INTO user (user_id) VALUES (${res.insertId}); INSERT INTO recherche (user_id) VALUES (${res.insertId});", (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return;
-      }
-      console.log("created tutorial: ", { id: res.insertId, ...newTutorial });
-    },
-    result(null, { id: res.insertId, ...newTutorial }))
-  }
-};
-User.getByEmail = (email, result) => {
-  sql.query(`SELECT * FROM user WHERE email = ${email}`, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    } 
-    if (res.length) {
-      console.log("found tutorial: ", res[0]);
-      result(null, res[0]);
-      return;
-    }
-    // not found Tutorial with the id
-    result({ kind: "not_found" }, null);
-  });
-};
+
+class User {
+  static addUser = async (email, password) => {
+    const sql = "INSERT INTO user (email, password) VALUES (?, ?)";
+
+    const result = await mysql.query(sql, [email, password]).catch((err) => err.message);
+    return typeof result === "string" ? result : result[0];
+  };
+
+  static getUserById = async (id) => {
+    const sql = "SELECT * FROM user WHERE id = '?'";
+
+    con.query(sql, id).catch((err) => err.message);
+    return typeof result === "string" ? result : result[0];
+  };
+
+  static getUserByEmail = async (email) => {
+    const sql = "SELECT * FROM user WHERE email = ?";
+
+    const result = await mysql.query(sql, [email]).catch((err) => err.message);
+    return typeof result === "string" ? result : result[0];
+  };
+
+  static getAllUser = async () => {
+    const sql = "SELECT * FROM user";
+
+    const result = mysql.query(sql).catch((err) => err.message);
+    return typeof result === "string" ? result : result[0];
+  };
+
+  static updateUserById = async (email, password,id) => {
+    const sql = "UPDATE user SET email = '?', password = '?' WHERE id = '?'";
+    var values = [email, password,id]
+
+    con.query(sql, values, function (err, result) {
+      if (err) throw err;
+      return result;
+    });
+  };
+
+} 
+  
+
 module.exports = User;

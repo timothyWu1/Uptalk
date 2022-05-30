@@ -24,20 +24,36 @@ export default class SignUp extends Component {
     }
 
     handleSubmit(event) {
-        alert('A email was submitted: ' + this.state.email + "\npassword = " + this.state.password);
+        // alert('A email was submitted: ' + this.state.email + "\npassword = " + this.state.password);
         // alert('A email was submitted: ' + this.state);
         var email = this.state.email;
         var password = this.state.password;
 
             //blockage du bruteforce 
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password})
+        };
+        console.log(requestOptions)
+        fetch('http://localhost:3001/api/auth/signin', requestOptions)
+            .then(async response => {
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const data = isJson && await response.json();
 
-            //vérification que le mail existe dans la base de données
+                // check for error response
+                if (!response.ok) {
+                    // get error message from body or default to response status
+                    const error = (data && data.message) || response.status;
+                    return Promise.reject(error);
+                }
 
-            //decryptage du mot de passe 
-
-            // vérification du mot de passe 
-
-            //connexion de l'utilisateur
+                this.setState({ postId: data.id })
+            })
+            .catch(error => {
+                this.setState({ errorMessage: error.toString() });
+                console.error('There was an error!', error);
+            });
 
             //redirection
 
