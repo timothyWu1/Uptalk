@@ -6,7 +6,7 @@ const mysql = require("../config/mysql");
 class Profile {
   static addProfile = async (user_id) => {
     const sql = "INSERT INTO profile (user_id) VALUES (?)";
-
+ 
     const result = await mysql.query(sql, [user_id]).catch((err) => err.message);
     return typeof result === "string" ? result : result[0];
   };
