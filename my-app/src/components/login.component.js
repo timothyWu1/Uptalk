@@ -64,12 +64,12 @@ export default class SignUp extends Component {
         return (
             <div className="card">
                 <form onSubmit={this.handleSubmit} method="post">
-                    <h3>Register</h3>
+                    <h2>Register</h2>
 
 
                     <div className="form-group">
                         <label>Email
-                            <input name="email" value={this.state.email}  onChange={this.handleChange} type="email" className="form-control" placeholder="Enter email" />
+                            <input name="email" value={this.state.email}  onChange={this.handleChange} type="text" className="form-control" placeholder="Enter email" />
                         </label>
                     </div>
 
@@ -79,11 +79,11 @@ export default class SignUp extends Component {
                         </label>
                     </div>
 
-                    <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Register</button>
+                    <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">login</button>
                 </form>
 
                 <p className="forgot-password text-right">
-                    Already registered <a href="/login">log in?</a>
+                    Not registered yet ? <a href="/register"> Register?</a>
                 </p>
                 
             </div>

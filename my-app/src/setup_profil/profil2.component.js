@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import Button from '@material-ui/core/Button';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
 
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            nom : '',
-            prenom: '',
+            anniversaire: '',
+            sexe: ''
         }
         
         this.buttonDisabled = true;
@@ -29,37 +26,24 @@ export default class SignUp extends Component {
     }
 
     handleSubmit(event) {
-        var nom = this.state.nom;
-        var prenom = this.state.prenom;
+        var anniversaire = this.state.anniversaire;
+        var sexe = this.state.sexe;
 
             //mise a jour du profil
 
         event.preventDefault();
     } 
 
-    render() {
-
-        if (this.state.nom.length < 2 || this.state.nom.length>25 || this.state.prenom.length < 2 || this.state.prenom.length>25 || this.state.anniversaire.length !== 10){
-            this.buttonDisabled = true;
-        } else {
-            this.buttonDisabled = false;
-        }
+    render () {
 
         return (
-            
             <div className="card">
-
                 <form onSubmit={this.handleSubmit}  method="post" >
-                {/* <Button
-    variant="contained"
-    color="default"         
-    startIcon={<ArrowBackIcon />}
-  >button</Button> */}
                     <h1>Profil</h1>
 
 
                     <div className="form-group">
-                        <label>Lastname
+                        <label>sexe
                             <input name="nom" value={this.state.email}  onChange={this.handleChange} type="text" className="form-control" placeholder="Your firstname" />
                         </label>
                     </div>
@@ -76,6 +60,9 @@ export default class SignUp extends Component {
 
 
 
+                <p className="forgot-password text-right">
+                    Already registered <a href="/login">log in?</a>
+                </p>
                 
             </div>
         );
