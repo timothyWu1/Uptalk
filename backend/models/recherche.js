@@ -12,7 +12,7 @@ class Recherche {
   };
 
   static getRechercheById = async (user_id) => {
-    const sql = "SELECT * FROM recherche WHERE user_id = ?";
+    const sql = "SELECT * FROM recherche WHERE user_id = ?;";
 
     const result = await mysql.query(sql, user_id).catch((err) => err.message);
     return typeof result === "string" ? result : result[0];
