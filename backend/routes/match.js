@@ -9,6 +9,8 @@ const matchController = require('../controllers/match');
 
 router.get('/:id', matchController.findMatch);
 
+router.post('/', matchController.addLike);
+
 
 
 

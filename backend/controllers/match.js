@@ -15,3 +15,15 @@ exports.findMatch = (req, res, next) => {
     .then(response => {res.status(200).json(response);})
     
 }
+
+exports.addLike = (req, res, next) => {
+    match.addLike(req.body.user_id, req.body.target_id, req.body.type)
+    .then(response => {
+        //test si il y a un match 
+        
+
+
+
+        res.status(200).json(response);})
+    
+}
