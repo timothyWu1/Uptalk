@@ -21,6 +21,7 @@ exports.register = (req, res, next) => {
                   .then(() => {profile.addProfile(create.insertId)
                     .then(() => {question_relation.addQuestion_Relation(create.insertId, 1)
                       .then(() => {interet_relation.addInteret_Relation(create.insertId, 1) 
+                        .then (res.status(200).json({message:"utilisateur créé avec succés"}))
                       })
                     })
                   })
@@ -51,7 +52,7 @@ exports.login = (req, res, next) => {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           }
           res.status(200).json({
-            userId: user._id,
+            message:"connexion effectuée",
             token: jwt.sign(
               {user_id : user.id},
               "SECURITY_KEY",

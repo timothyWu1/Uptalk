@@ -1,81 +1,33 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import "./CSS/todo.css";
+import { useForm } from "react-hook-form";
 
-export default class SignUp extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email : '',
-            password: '',
-        }
+export default function SignIn() {
+  
 
-        this.buttonDisabled = true;
-        this.errormsg = "";
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-    handleChange(event) {
+    const onSubmit = (data) => {submit(data, errormsg)}
 
-        this.setState(
-            {[event.target.name] : event.target.value}
-        );
+    var errormsg = "";
 
-    }
-
-    handleSubmit(event) {
-        // alert('A email was submitted: ' + this.state.email + "\npassword = " + this.state.password);
-        // alert('A email was submitted: ' + this.state);
-        var email = this.state.email;
-        var password = this.state.password;
-
-            //blockage du bruteforce 
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email, password: password})
-        };
-        console.log(requestOptions)
-        fetch('http://localhost:3001/api/auth/signin', requestOptions)
-            .then(async response => {
-                const isJson = response.headers.get('content-type')?.includes('application/json');
-                const data = isJson && await response.json();
-
-                // check for error response
-                if (!response.ok) {
-                    // get error message from body or default to response status
-                    const error = (data && data.message) || response.status;
-                    return Promise.reject(error);
-                }
-
-                this.setState({ postId: data.id })
-            })
-            .catch(error => {
-                this.setState({ errorMessage: error.toString() });
-                console.error('There was an error!', error);
-            });
-
-            //redirection
-
-        event.preventDefault();
-    } 
-
-    render() {
+    
         return (
             <div className="card">
-                <form onSubmit={this.handleSubmit} method="post">
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <h2>Register</h2>
 
 
                     <div className="form-group">
                         <label>Email
-                            <input name="email" value={this.state.email}  onChange={this.handleChange} type="text" className="form-control" placeholder="Enter email" />
+                            <input name="email" {...register("email", { required: true, maxLength: 20 })} type="text" className="form-control" placeholder="Enter email" />
                         </label>
                     </div>
 
                     <div className="form-group">
                         <label>Password    
-                            <input name="password" value={this.state.password}  onChange={this.handleChange} type="password" className="form-control" placeholder="Enter password" />
+                            <input name="password" {...register("password", { required: true, maxLength: 100  })} type="password" className="form-control" placeholder="Enter password" />
                         </label>
                     </div>
 
@@ -88,5 +40,45 @@ export default class SignUp extends Component {
                 
             </div>
         );
-    }
+    
 }
+
+
+function submit(state, errormsg) {
+
+        // alert('A email was submitted: ' + state.email + "\npassword = " + state.password);
+        // alert('A email was submitted: ' + state);
+        var email = state.email;
+        var password = state.password;
+
+            //blockage du bruteforce 
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, password: password})
+        };
+        console.log(requestOptions)
+        fetch('http://localhost:3001/api/auth/signin', requestOptions)
+            .then(async response => {
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const data = isJson && await response.json();
+                
+                // check for error response
+                if (!response.ok) {
+                    // get error message from body or default to response status
+                    alert(data.error)
+                    const error = (data && data.message) || response.status;
+                    return Promise.reject(error);
+                } else { 
+                    alert(data.message)
+                    window.location.replace("/setup");
+                }
+
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+
+            //redirection
+
+    } 

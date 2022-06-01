@@ -1,48 +1,81 @@
 import React, { Component, useState } from "react";
-import Button from "@material-ui/core/Button";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import "./CSS/todo.css";
+import { useForm } from "react-hook-form";
 
-export default class SignUp extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-      repeatPassword: "",
-    };
 
-    this.buttonDisabled = true;
-    this.errormsg = "";
+export default function SignUp() {
+  
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+    const onSubmit = (data) => {submit(data, errormsg)}
+
+    var errormsg = "";
+
+    return (
+      <div className="card">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h1>Register</h1>
+          <div className="form-group">
+                        <label>Lastname
+                            <input {...register("email", { required: true, maxLength: 20 })} type="text" placeholder="Enter email"/>
+                        </label>
+                    </div>
+
+          <br />          
+          <label>password :</label> <br />
+            <input {...register("password", { required: true, maxLength: 100, minLength:6  })} type="password"  placeholder="Enter password" />
+          <br />
+          <label>confirm Password :</label>
+          <br />{" "}
+          <input
+            type="password"
+            {...register("repeatPassword", { required: true, maxLength: 100, minLength:6 })}
+            
+            placeholder="Enter password"
+          />
+          <br />
+          {/* <input type="submit" value="Register" /> */}
+          <button
+            type="submit"
+            className="btn btn-dark btn-lg btn-block"
+            id="submit_button"
+          >
+            Register
+          </button>
+
+        </form>
+        <p>{errormsg}</p>
+
+        <p className="forgot-password text-right">
+          Already registered <a href="/login">log in?</a>
+        </p>
+      </div>
+    );
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
+  function submit(state, errormsg) {
 
-  handleSubmit(event) {
-    // alert('A email was submitted: ' + this.state);
-    var email = this.state.email;
-    var password = this.state.password;
-    var repeatPassword = this.state.repeatPassword;
+    
+    var email = state.email;
+    var password = state.password;
+    var repeatPassword = state.repeatPassword;
 
     if (password !== repeatPassword) {
-      this.errormsg = "les deux mots de passe ne correspondent pas";
+      errormsg = "les deux mots de passe ne correspondent pas";
     } else if (password.length < 6) {
-      this.errormsg = "le mot de passe est trop court";
+      errormsg = "le mot de passe est trop court";
     } else if (password.length > 100) {
-      this.errormsg = "le mot de passe est trop long";
+      errormsg = "le mot de passe est trop long";
     } else if (email.length < 6) {
-      this.errormsg = "l'email est trop court";
+      errormsg = "l'email est trop court";
     } else if (email.length > 254) {
-      this.errormsg = "l'email est trop long";
+      errormsg = "l'email est trop long";
     } else if (/@/.test(email) === false) {
-      this.errormsg = "l'email n'est pas correct";
+      errormsg = "l'email n'est pas correct";
     } else {
-      // alert('A email was submitted: ' + this.state.email + "\npassword = " + this.state.password  + "\nReapeat Password = " + this.state.repeatPassword);
+      // alert('A email was submitted: ' + email + "\npassword = " + password  + "\nReapeat Password = " + repeatPassword);
       //test des caracteres spéciaux.
 
       //envoi de la requête sur le server
@@ -65,13 +98,17 @@ export default class SignUp extends Component {
           if (!response.ok) {
             // get error message from body or default to response status
             const error = (data && data.message) || response.status;
+            alert(data.message)
             return Promise.reject(error);
+          } else { 
+            alert(data.message)
+            window.location.replace("/login");  
           }
 
-          this.setState({ postId: data.id });
+         
         })
         .catch((error) => {
-          this.setState({ errorMessage: error.toString() });
+          
           console.error("There was an error!", error);
         });
 
@@ -79,109 +116,8 @@ export default class SignUp extends Component {
 
       //envoi d'une requête de login de l'utilisateur
     }
-    if (this.errormsg !== "") {
-      alert(this.errormsg);
+    if (errormsg !== "") {
+      alert(errormsg);
     }
-    event.preventDefault();
   }
-
-  render() {
-    const button = document.querySelector("button");
-    if (this.state.password !== this.state.repeatPassword) {
-      button.disabled = true;
-      this.errormsg = "les mots de passe ne correspondent pas";
-    } else {
-      button.disabled = false;
-      this.errormsg = "";
-    }
-    return (
-      <div className="card">
-        <form onSubmit={this.handleSubmit} method="post">
-          <h1>Register</h1>
-          <div className="form-group">
-                        <label>Lastname
-                            <input name="nom" value={this.state.email}  onChange={this.handleChange} type="text" className="form-control" placeholder="Your firstname" />
-                        </label>
-                    </div>
-
-          <br />          
-          <label>password :</label> <br />
-          <input
-            type="text"
-            value={this.state.password}
-            onChange={this.handleChange}
-            placeholder="Enter password"
-          />
-          <br />
-          <label>confirm Password :</label>
-          <br />{" "}
-          <input
-            type="password"
-            value={this.state.repeatPassword}
-            onChange={this.handleChange}
-            placeholder="Enter password"
-          />
-          <br />
-          {/* <input type="submit" value="Register" /> */}
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            Register
-          </button>
-
-        </form>
-        <p>{this.errormsg}</p>
-
-        <p className="forgot-password text-right">
-          Already registered <a href="/login">log in?</a>
-        </p>
-      </div>
-    );
-  }
-
-  // render() {
-  //     const button = document.querySelector('button')
-  //     if (this.state.password !== this.state.repeatPassword){
-  //         button.disabled = true;
-  //         this.errormsg = "les mots de passe ne correspondent pas"
-  //     } else {
-  //         button.disabled = false;
-  //         this.errormsg = ""
-  //     }
-  //     return (
-  //         <div className="card">
-  //             <form onSubmit={this.handleSubmit} method="post">
-  //                 <h3>Register</h3>
-
-  //                 <div className="form-group">
-  //                     <label>Email
-  //                         <input name="email" value={this.state.email}  onChange={this.handleChange} type="email" className="form-control" placeholder="Enter email" />
-  //                     </label>
-  //                 </div>
-
-  //                 <div className="form-group">
-  //                     <label>Password
-  //                         <input name="password" value={this.state.password}  onChange={this.handleChange} type="password" className="form-control" placeholder="Enter password" />
-  //                     </label>
-  //                 </div>
-  //                 <div className="form-group">
-  //                     <label>Password
-  //                         <input name="repeatPassword" value={this.state.repeatPassword}  onChange={this.handleChange} type="password" className="form-control" placeholder="Enter password" />
-  //                     </label>
-  //                 </div>
-
-  //                 <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Register</button>
-  //             </form>
-
-  //             <p>{this.errormsg}</p>
-
-  //             <p className="forgot-password text-right">
-  //                 Already registered <a href="/login">log in?</a>
-  //             </p>
-
-  //         </div>
-  //     );
-  // }
-}
+  

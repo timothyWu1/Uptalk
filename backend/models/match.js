@@ -97,6 +97,13 @@ class Match {
     return typeof result === "string" ? result : result[0];
   }
 
+  static testMatch = async (user_id, target_id, type_name) => {
+    const sql = "SELECT user_id FROM liked WHERE liked.target_id = ? AND liked.user_id = ? AND liked.type_name = '?'";
+ 
+    const result = await mysql.query(sql, [user_id, target_id, type_name]).catch((err) => err.message);
+    return typeof result === "string" ? result : result[0];
+  }
+
 
 
   static getLikesById = async (user_id) => {

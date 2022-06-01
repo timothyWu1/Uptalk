@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import Button from '@material-ui/core/Button';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 
 
 export default class SignUp extends Component {

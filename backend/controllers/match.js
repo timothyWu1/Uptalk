@@ -19,11 +19,11 @@ exports.findMatch = (req, res, next) => {
 exports.addLike = (req, res, next) => {
     match.addLike(req.body.user_id, req.body.target_id, req.body.type)
     .then(response => {
-        //test si il y a un match 
-        
+        //tester si l'utilisateur a été liké par la cible
+        match.testLike(req.body.user_id, req.body.target_id, req.body.type)
+        .then(match => {
+            match.addContact(req.body.user_id, match)
 
-
-
-        res.status(200).json(response);})
-    
+            res.status(200).json(response);})
+        })
 }
