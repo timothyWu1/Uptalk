@@ -9,29 +9,29 @@ const ProfileController = require('../controllers/profile');
 
 
 
-router.get('/:id', ProfileController.getProfileById);
+router.get('/:id',auth, ProfileController.getProfileById);
 
-router.get('/localisation/:id', ProfileController.getLocalisationById);
+router.get('/localisation/:id',auth, ProfileController.getLocalisationById);
 
-router.get('/recherche/:id', ProfileController.getRechercheById);
+router.get('/recherche/:id',auth, ProfileController.getRechercheById);
 
-router.get('/interet/:id', ProfileController.getInteretById);
+router.get('/interet/:id',auth, ProfileController.getInteretById);
 
-router.get('/question/:id', ProfileController.getQuestionById);
+router.get('/question/:id',auth, ProfileController.getQuestionById);
 
 
 
 //routes de modifications
 
-router.post('/:id', ProfileController.updateProfileById);
+router.post('/:id',auth, ProfileController.updateProfileById);
 
-router.post('/localisation/:id', ProfileController.updateLocalisationById);
+router.post('/localisation/:id',auth, ProfileController.updateLocalisationById);
 
-router.post('/recherche/:id', ProfileController.updateRechercheById);
+router.post('/recherche/:id',auth, ProfileController.updateRechercheById);
 
-router.post('/interet/:id', ProfileController.updateInteretById);
+router.post('/interet/:id',auth, ProfileController.updateInteretById);
 
-router.post('/question/:id', ProfileController.updateQuestionById);
+router.post('/question/:id',auth, ProfileController.updateQuestionById);
  
 
 

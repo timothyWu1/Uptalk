@@ -1,10 +1,12 @@
 import React, { Component, useState } from "react";
 import "./CSS/todo.css";
 import { useForm } from "react-hook-form";
+import { useCookies } from "react-cookie";
+
 
 export default function SignIn() {
   
-
+    
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
@@ -15,7 +17,7 @@ export default function SignIn() {
         return (
             <div className="card">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <h2>Register</h2>
+                    <h2>Connexion</h2>
 
 
                     <div className="form-group">
@@ -45,6 +47,9 @@ export default function SignIn() {
 
 function submit(state) {
 
+        
+
+
         // alert('A email was submitted: ' + state.email + "\npassword = " + state.password);
         // alert('A email was submitted: ' + state);
         var email = state.email;
@@ -69,7 +74,10 @@ function submit(state) {
                     const error = (data && data.message) || response.status;
                     return Promise.reject(error);
                 } else { 
-                    alert(data.message)
+                    console.log(data.userId)
+                    setCookie("token",data.token, 1); 
+                    setCookie("userId",data.userId, 1);
+
                     window.location.replace("/setup");
                 }
 
@@ -81,3 +89,10 @@ function submit(state) {
             //redirection
 
     } 
+
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + "; " + expires + ";path=/";
+}

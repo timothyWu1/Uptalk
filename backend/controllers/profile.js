@@ -39,26 +39,26 @@ exports.getQuestionById = (req, res, next) => {
 
 
 exports.updateProfileById = (req, res, next) => {
-  profile.updateProfileById(req.params.user_id, req.params.firstname, req.params.lastname, req.params.gender, req.params.birthday, req.params.bio)
-  .then(response => {res.status(200).json(response);})
+  profile.updateProfileById(req.body.user_id, req.body.firstname, req.body.lastname, req.body.gender, req.body.birthday, req.body.bio)
+  .then(response => {res.status(200).json({message:"utilisateur modifié avec succés"})})
 }
 
 exports.updateLocalisationById = (req, res, next) => {
-  localisation.updateLocalisationById(req.params.user_id, req.params.longitude, req.params.lattitude)
+  localisation.updateLocalisationById(req.body.user_id, req.body.longitude, req.body.lattitude)
   .then(response => {res.status(200).json(response);})
 }
 
 exports.updateRechercheById = (req, res, next) => {
-  recherche.updateRechercheById(req.params.user_id, req.params.preference_gender, req.params.zone_recherche, req.params.age_min, req.params.age_max)
+  recherche.updateRechercheById(req.body.user_id, req.body.preference_gender, req.body.zone_recherche, req.body.age_min, req.body.age_max)
   .then(response => {res.status(200).json(response);})
 } 
 
 exports.updateInteretById = (req, res, next) => {
-  interet_relation.updateInteret_RelationById(req.params.user_id , req.params.interet_id ,req.params.interet_nb)
+  interet_relation.updateInteret_RelationById(req.body.user_id , req.body.interet_id ,req.body.interet_nb)
   .then(response => {res.status(200).json(response);})
 }
 
 exports.updateQuestionById = (req, res, next) => {
-  question_relation.updateQuestion_RelationById(req.params.user_id, req.params.question_id, req.params.reponse, req.params.question_nb)
+  question_relation.updateQuestion_RelationById(req.body.user_id, req.body.question_id, req.body.reponse, req.body.question_nb)
   .then(response => {res.status(200).json(response);})
 }  
