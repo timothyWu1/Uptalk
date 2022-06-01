@@ -4,12 +4,15 @@ const localisation = require('../models/localisation')
 const question_relation = require('../models/question_relation')
 const recherche = require('../models/recherche')
 
+const auth = require('../middleware/auth');
+
 
 
 
 exports.getProfileById = (req, res, next) => {
+
   profile.getProfileById(req.params.id)
-  .then(response => {res.status(200).json(response);})
+  .then(response => {res.status(200).json(response[0]);})
 }
 
 exports.getLocalisationById = (req, res, next) => {

@@ -1,82 +1,99 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { useForm } from "react-hook-form";
 
 
 
-export default class SignUp extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            nom : '',
-            prenom: '',
+export default function SetupProfil() {
+
+    const user = User();
+    // alert(user)
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm({
+        defaultValues: {
+            firstName: user.firstname,
+            lastName: user.lastname,
         }
-        
-        this.buttonDisabled = true;
-        this.errormsg = "";
+    });
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+    const onSubmit = (data) => {submit(data)}
 
     
 
-    handleChange(event) {
 
-        this.setState(
-            {[event.target.name] : event.target.value}
-        );
+    return (
+        
+        <div className="card">
 
-    }
+            {/* {user} */}
 
-    handleSubmit(event) {
-        var nom = this.state.nom;
-        var prenom = this.state.prenom;
+            <form onSubmit={handleSubmit(onSubmit)} >
+            {/* <Button
+variant="contained"
+color="default"         
+startIcon={<ArrowBackIcon />}
+>button</Button> */}
+                <h1>Profil</h1>
 
-            //mise a jour du profil
+                <div className="form-group">
+                    <label>FirstName
+                        <input name="nom" {...register("firstname", { required: true, maxLength: 20 })} type="text" className="form-control" placeholder="Your firstname" />
+                    </label>
+                </div>
 
-        event.preventDefault();
-    } 
+                <div className="form-group">
+                    <label>Firstname   
+                        <input name="prenom" {...register("lastname", { required: true, maxLength: 20 })} type="text" className="form-control" placeholder="Your lastname" />
+                    </label>
+                </div>
 
-    render() {
 
-        if (this.state.nom.length < 2 || this.state.nom.length>25 || this.state.prenom.length < 2 || this.state.prenom.length>25 || this.state.anniversaire.length !== 10){
-            this.buttonDisabled = true;
-        } else {
-            this.buttonDisabled = false;
-        }
+                <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Register</button>
+            </form>
 
-        return (
+
+
             
-            <div className="card">
-
-                <form onSubmit={this.handleSubmit}  method="post" >
-                {/* <Button
-    variant="contained"
-    color="default"         
-    startIcon={<ArrowBackIcon />}
-  >button</Button> */}
-                    <h1>Profil</h1>
-
-
-                    <div className="form-group">
-                        <label>Lastname
-                            <input name="nom" value={this.state.email}  onChange={this.handleChange} type="text" className="form-control" placeholder="Your firstname" />
-                        </label>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Firstname   
-                            <input name="prenom" value={this.state.password}  onChange={this.handleChange} type="text" className="form-control" placeholder="Your lastname" />
-                        </label>
-                    </div>
-
-
-                    <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button" disabled={this.buttonDisabled}>Register</button>
-                </form>
-
-
-
-                
-            </div>
-        );
-    }
+        </div>
+    );
 }
+
+function User(){
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    };
+    fetch('http://localhost:3001/api/profile/2', requestOptions)
+        .then(async response => {
+            const isJson = response.headers.get('content-type')?.includes('application/json');
+            const data = isJson && await response.json();
+            alert(data.username)
+            return data;
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+            
+}
+
+
+function submit(state) {
+        var firstname = state.firstname;
+        var lastname = state.lastname;
+
+            //blockage du bruteforce 
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ firstname: firstname, lastname: lastname})
+        };
+        console.log(requestOptions)
+        fetch('http://localhost:3001/api/profile', requestOptions)
+            .then(async response => {
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const data = isJson && await response.json();
+
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    } 

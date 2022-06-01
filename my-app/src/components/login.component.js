@@ -8,9 +8,8 @@ export default function SignIn() {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {submit(data, errormsg)}
+    const onSubmit = (data) => {submit(data)}
 
-    var errormsg = "";
 
     
         return (
@@ -44,7 +43,7 @@ export default function SignIn() {
 }
 
 
-function submit(state, errormsg) {
+function submit(state) {
 
         // alert('A email was submitted: ' + state.email + "\npassword = " + state.password);
         // alert('A email was submitted: ' + state);
