@@ -9,10 +9,9 @@ export default function SetupProfil() {
 
     const [userList, setUserList] = useState([]);
     const { reset, register, handleSubmit, watch, formState: { errors }  } = useForm();
-    
 
     useEffect(() => {
-        console.log(getCookie("userId"));
+        
 
         const requestOptions = {  
             method: 'GET',
@@ -22,54 +21,42 @@ export default function SetupProfil() {
         
         axios.get('http://localhost:3001/api/profile/'+getCookie("userId"),requestOptions).then(async res => {
             var data = await res.data;
-            setUserList(data);
+            setUserList(data); 
+            
             let defaultValues = {};
-            defaultValues.firstname = userList.firstname;
-            defaultValues.lastname = userList.lastname;
+            defaultValues.firstname = data.firstname;
+            defaultValues.lastname = data.lastname;
             reset({ ...defaultValues }); 
-            if (!res.ok) {
-                // get error message from body or default to response statusText
-                const error = (res.data && res.data.message) || res.statusText;
-                return Promise.reject(error);
-            }
-            console.log(userList)
+            
         })
         
   }, []);
 
 
     const onSubmit = (data) => {submit(data, userList)}
-
-    
-
-
     return (
         
         <div className="card">
 
 
             <form onSubmit={handleSubmit(onSubmit)} >
-            {/* <Button
-variant="contained"
-color="default"         
-startIcon={<ArrowBackIcon />}
->button</Button> */} 
                 <h1>Profil</h1>
 
+
                 <div className="form-group">
-                    <label>FirstName
-                        <input value={userList.firstname} onChange={setUserList(userList.firstname)} name="nom" {...register("firstname", { required: true, maxLength: 50, minLength: 2 })} type="text" className="form-control" placeholder="Your firstname" />
+                    <label>Prenom
+                        <input  name="nom" {...register("firstname", { required: true, maxLength: 50, minLength: 2 })} type="text" className="form-control" placeholder="Votre prenom" />
                     </label>
                 </div>
 
                 <div className="form-group">
-                    <label>Firstname   
-                        <input name="prenom" {...register("lastname", { required: true, maxLength: 50, minLength: 2 })} type="text" className="form-control" placeholder="Your lastname" />
+                    <label>Nom   
+                        <input name="prenom" {...register("lastname", { required: true, maxLength: 50, minLength: 2 })} type="text" className="form-control" placeholder="Votre nom" />
                     </label>
                 </div>
 
 
-                <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Edit profil</button>
+                <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Mettre a jour le profil</button>
             </form>
 
 
