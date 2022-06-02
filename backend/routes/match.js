@@ -11,7 +11,7 @@ const matchController = require('../controllers/match');
 
 router.get('/:id',auth, matchController.findMatch);
 
-router.post('/',auth, matchController.addLike);
+router.post('/:id',auth, matchController.addLike);
 
 
 

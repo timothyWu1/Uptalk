@@ -54,7 +54,7 @@ class Match {
 
         
 
-    const sql = "SELECT profile.user_id, localisation.lattitude, localisation.longitude, recherche.zone_recherche FROM profile INNER JOIN localisation ON localisation.user_id = profile.user_id INNER JOIN recherche  ON profile.user_id = recherche.user_id LEFT JOIN liked ON liked.user_id = profile.user_id WHERE liked.user_id IS NULL AND profile.gender IN (?)  AND recherche.preference_gender IN (?, 'bi')  AND DATE_SUB( NOW(), INTERVAL ? YEAR  ) > profile.birthday   AND DATE_SUB( NOW(), INTERVAL ? YEAR  ) < profile.birthday  AND recherche.age_min < ?  AND recherche.age_max > ?; ";
+    const sql = "SELECT profile.user_id, localisation.lattitude, localisation.longitude, recherche.zone_recherche, profile.bio, profile.firstname, profile.birthday FROM profile INNER JOIN localisation ON localisation.user_id = profile.user_id INNER JOIN recherche  ON profile.user_id = recherche.user_id LEFT JOIN liked ON liked.user_id = profile.user_id WHERE liked.user_id IS NULL AND profile.gender IN (?)  AND recherche.preference_gender IN (?, 'bi')  AND DATE_SUB( NOW(), INTERVAL ? YEAR  ) > profile.birthday   AND DATE_SUB( NOW(), INTERVAL ? YEAR  ) < profile.birthday  AND recherche.age_min < ?  AND recherche.age_max > ?; ";
     const result = await mysql.query(sql, [sexe_target, user_sexe, target_age_min, target_age_max, user_age, user_age]).catch((err) => err.message);
 
 
@@ -76,7 +76,7 @@ class Match {
       if (tab_localisation[i].user_id != user_id){
         var distance = Math.acos(Math.sin((Math.pi / 180) * user_latt) * Math.sin((Math.pi / 180) * tab_localisation[i].lattitude) + Math.cos((Math.pi / 180) * user_latt) * Math.cos((Math.pi / 180) * tab_localisation[i].lattitude) * Math.cos((Math.pi / 180) * tab_localisation[i].longitude - (Math.pi / 180) * user_long)) * 6371;
         if (distance < user_zone && distance < tab_localisation[i].zone_recherche){
-          tab_result.push(tab_localisation[i].user_id)
+          tab_result.push({user_id : tab_localisation[i].user_id, lattitude : tab_localisation[i].lattitude, longtitude : tab_localisation[i].longitude, bio : tab_localisation[i].bio, firstname : tab_localisation[i].firstname, birthday : tab_localisation[i].birthday})
         }
       }
     }
