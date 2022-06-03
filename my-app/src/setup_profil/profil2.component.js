@@ -1,91 +1,41 @@
-import { Dimensions, View, Image } from "react-native";
-import React, { Component } from "react";
+import React, {  useEffect, useState  } from "react";
+import { useForm } from "react-hook-form";
 import "./styles/styles.css";
-const { width, height } = Dimensions.get("screen");
+import axios from "axios";
 
-export default class secondProfil extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      anniversaire: "",
-      sexe: "",
-    };
 
-    this.buttonDisabled = true;
-    this.errormsg = "";
+export default function SecondProfil() {
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+    const [userList, setUserList] = useState([]);
+    const { reset, register, handleSubmit, watch, formState: { errors }  } = useForm();
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
+  useEffect(() => {
+        
 
-  handleSubmit(event) {
-    var anniversaire = this.state.anniversaire;
-    var sexe = this.state.sexe;
+        const requestOptions = {  
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', "authorization": getCookie("token") },
+            body: JSON.stringify(userList) 
+        };
+        
+        axios.get('http://localhost:3001/api/profile/'+getCookie("userId"),requestOptions).then(async res => {
+            var data = await res.data;
+            setUserList(data); 
+            
+            let defaultValues = {};
+            defaultValues.birthday = data.birthday;
+            defaultValues.gender = data.gender;
+            reset({ ...defaultValues }); 
+            
+        })
+        
+  }, []);
 
-    //mise a jour du profil
 
-    event.preventDefault();
-  }
-
-  render() {
+    const onSubmit = (data) => {submit(data, userList)}
     return (
-      <div className="card">
-        <div
-          style={{
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div
-            style={{
-              borderTop: "5px solid #fff ",
-              marginLeft: 360,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-          <div
-            style={{
-              borderTop: "5px solid #000 ",
-              marginLeft: 20,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-          <div
-            style={{
-              borderTop: "5px solid #fff ",
-              marginLeft: 20,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-        </div>
-
-        <form onSubmit={this.handleSubmit} method="post">
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            Suivant
-          </button>
-
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            precedent
-          </button>
+      <div>
+        <form onSubmit={handleSubmit(onSubmit)} >
 
           <h1>Profil</h1>
 
@@ -94,9 +44,8 @@ export default class secondProfil extends Component {
               Date de naissance
               <input
                 name="anniversaire"
-                value={this.state.anniversaire}
-                onChange={this.handleChange}
-                type="text"
+                {...register("birthday", { required: true, maxLength: 50, minLength: 2 })}
+                type="date"
                 className="form-control"
                 placeholder="date de naissance"
               />
@@ -106,33 +55,6 @@ export default class secondProfil extends Component {
             <div className="form-group">
               <h1>Quel est votre sexe ?</h1>
             </div>
-
-            <View
-              style={{
-                width: width * 0.8,
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                alignContent: "center",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Image
-                source={require("./asset/homme.png")}
-                style={{ width: "30%", height: 400 }}
-              />
-
-              <Image
-                source={require("./asset/femme.png")}
-                style={{ width: "30%", height: 400 }}
-              />
-
-              <Image
-                source={require("./asset/other.png")}
-                style={{ width: "30%", height: 400 }}
-              />
-            </View>
             <div>
               <div
                 style={{
@@ -141,23 +63,65 @@ export default class secondProfil extends Component {
                   justifyContent: "center",
                 }}
               >
-                <input type="radio" name="gender" value="men" id="men" />
+                <input type="radio" {...register("gender")} value="Male" id="men" />
                 <label for="homme">Homme</label>
 
-                <input type="radio" name="gender" value="women" id="women" />
+                <input type="radio" {...register("gender")} value="Female" id="women" />
                 <label for="femme">Femme</label>
-
-                <input type="radio" name="gender" value="other" id="other" />
-                <label for="nb">Autres</label>
               </div>
             </div>
-          </div>
-        </form>
+            
 
-        <p className="forgot-password text-right">
-          Already registered <a href="/login">log in?</a>
-        </p>
+          </div>
+
+          <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Mettre a jour le profil</button>
+
+        </form>
       </div>
     );
   }
+
+
+  function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
+
+
+
+function submit(state, userList) {
+        var birthday = state.birthday;
+        var gender = state.gender;
+
+
+        userList.birthday = birthday;
+        userList.gender = gender;
+        console.log(userList);
+
+            //blockage du bruteforce 
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', "authorization": getCookie("token")},
+            body: JSON.stringify(userList)
+        };
+        fetch('http://localhost:3001/api/profile/'+getCookie("userId"), requestOptions)
+            .then(async response => {
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const data = isJson && await response.json();
+                alert(data.message)
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    } 
+

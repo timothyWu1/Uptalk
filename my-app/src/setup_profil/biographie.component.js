@@ -1,98 +1,49 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
-export default class Biographie extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      biographie: "",
-    };
 
-    this.buttonDisabled = true;
-    this.errormsg = "";
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+ 
+export default function Biographie() {
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
+    const [userList, setUserList] = useState([]);
+    const { reset, register, handleSubmit, watch, formState: { errors }  } = useForm();
 
-  handleSubmit(event) {
-    var biographie = this.state.biographie;
-    //vérification de la biographie
+    useEffect(() => {
+        
 
-    //ajout dans la base de données
+        const requestOptions = {  
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', "authorization": getCookie("token") },
+            body: JSON.stringify(userList) 
+        };
+        
+        axios.get('http://localhost:3001/api/profile/'+getCookie("userId"),requestOptions).then(async res => {
+            var data = await res.data;
+            setUserList(data); 
+            
+            let defaultValues = {};
+            defaultValues.bio = data.bio;
+            reset({ ...defaultValues }); 
+            
+        })
+        
+  }, []);
 
-    event.preventDefault();
-  }
+    const onSubmit = (data) => {submit(data, userList)}
 
-  render() {
-    const button = document.querySelector("button");
-    if (
-      this.state.biographie.length < 100 ||
-      this.state.biographie.length > 500
-    ) {
-      button.disabled = true;
-    } else {
-      button.disabled = false;
-    }
+
     return (
-      <div className="card">
-        <div>
-          <div
-            style={{
-              borderTop: "5px solid #fff ",
-              marginLeft: 450,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-          <div
-            style={{
-              borderTop: "5px solid #fff ",
-              marginLeft: 20,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-            <div
-            style={{
-              borderTop: "5px solid #000 ",
-              marginLeft: 20,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-        </div>
+      <div>
 
-        <form onSubmit={this.handleSubmit} method="post">
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            Suivant
-          </button>
-
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            precedent
-          </button>
-
+        <form onSubmit={handleSubmit(onSubmit)} >
+        
           <h3>Biographie</h3>
 
           <div className="form-group">
-            <textarea
-              name="biographie"
-              value={this.state.biographie}
-              onChange={this.handleChange}
+            <textarea name="biographie"
+              {...register("bio", { required: true, maxLength: 50, minLength: 2 })}
               class="form-control"
               placeholder="Biographie"
               id="floatingTextarea2"
@@ -103,16 +54,49 @@ export default class Biographie extends Component {
             type="submit"
             className="btn btn-dark btn-lg btn-block"
             id="submit_button"
-            disabled
-          >
-            Register
-          </button>
+            >Register</button>
         </form>
-
-        <p className="forgot-password text-right">
-          Already registered <a href="/login">log in?</a>
-        </p>
       </div>
     );
   }
+
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
+
+
+
+function submit(state, userList) {
+        var bio = state.bio;
+
+
+        userList.bio = bio;
+
+            //blockage du bruteforce 
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', "authorization": getCookie("token")},
+            body: JSON.stringify(userList)
+        };
+        fetch('http://localhost:3001/api/profile/'+getCookie("userId"), requestOptions)
+            .then(async response => {
+                const isJson = response.headers.get('content-type')?.includes('application/json');
+                const data = isJson && await response.json();
+                alert(data.message)
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    } 

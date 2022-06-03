@@ -36,26 +36,21 @@ export default function SetupProfil() {
 
 
     const onSubmit = (data) => {submit(data, userList)}
+    
     return (
         
-        <div className="card">
+        
 
 
             <form onSubmit={handleSubmit(onSubmit)} >
                 <h1>Profil</h1>
 
 
-                <div>
-                    <div style={{ borderTop: "5px solid #000 ", marginLeft: 350, marginRight: 20, width:100, float:"left" }}></div>
-                    <div style={{ borderTop: "5px solid #fff ", marginLeft: 20, marginRight: 20, width:100, float:"left" }}></div>
-                    <div style={{ borderTop: "5px solid #fff ", marginLeft: 20, marginRight: 20, width:100, float:"left" }}></div>
-                </div>
+                
 
 
 
-                <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Suivant</button>
-
-                    <button type="submit" className="btn btn-dark btn-lg btn-block"  id="submit_button">precedent</button>
+                
 
                     <h1>Création de profil</h1>
 
@@ -77,8 +72,6 @@ export default function SetupProfil() {
 
 
 
-            
-        </div>
     );
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Button from "@material-ui/core/Button";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+// import Button from "@material-ui/core/Button";
+// import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 export default class Question extends Component {
   constructor(props) {
@@ -35,45 +35,8 @@ export default class Question extends Component {
 
 
     return (
-      <div className="card">
+      
         <div>
-          <div
-            style={{
-              borderTop: "5px solid #000 ",
-              marginLeft: 450,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-          <div
-            style={{
-              borderTop: "5px solid #fff ",
-              marginLeft: 20,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-        </div>
-
-        <form onSubmit={this.handleSubmit} method="post">
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            Suivant
-          </button>
-
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            precedent
-          </button>
-
           <h1>Decrivez vous :</h1>
 
           <div>
@@ -106,7 +69,7 @@ export default class Question extends Component {
             </select>
             <input name="rep3" value={this.state.answer}  onChange={this.handleChange} type="text" className="form-control" placeholder="Votre réponse" />
           </div>
-        </form>
+
       </div>
     );
   }

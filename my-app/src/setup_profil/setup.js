@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import ReactDOM from 'react-dom/client';
 import '../index.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import Profil from "./profil.component"
+import Profil2 from "./profil2.component"
 import Biographie from "./biographie.component"
+import Interet from "./interet.component"
+import Question from "./question.component"
+
 
 export default function Setup() {
   var returned
   //test si le profil n'est pas configuré
+
+  const [count, setCount] = useState(0);
   
-  returned = <Profil/>
+  returned = [<Profil/>, <Profil2/>, <Biographie/>, <Interet/>, <Question/>]
+
   //test si la bio est configuré
   // returned = <Biographie/>
 
@@ -17,7 +24,27 @@ export default function Setup() {
  
 
   return (
-    returned
+    <div className="card">
+
+      <div>
+          <div style={{ borderTop: "5px solid #000 ", marginLeft: 350, marginRight: 20, width:100, float:"left" }}></div>
+          <div style={{ borderTop: "5px solid #fff ", marginLeft: 20, marginRight: 20, width:100, float:"left" }}></div>
+          <div style={{ borderTop: "5px solid #fff ", marginLeft: 20, marginRight: 20, width:100, float:"left" }}></div>
+      </div>
+
+      <div>
+
+          <button onClick={() => setCount(count - 1)} className="btn btn-dark btn-lg btn-block"  id="submit_button">precedent</button>
+
+
+          <button onClick={() => setCount(count + 1)} className="btn btn-dark btn-lg btn-block" id="submit_button">Suivant</button>
+
+
+      </div>
+      {returned[count]}
+    </div>
+    
+    
 
    
   );

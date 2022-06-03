@@ -1,103 +1,111 @@
-import React, { Component } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Select from 'react-select';
 
-export default class Interet extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      nom: "",
-      prenom: "",
-    };
 
-    this.buttonDisabled = true;
-    this.errormsg = "";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
 
-  handleSubmit(event) {
-    var nom = this.state.nom;
-    var prenom = this.state.prenom;
+ 
+export default function SetupProfil() {
 
-    //mise a jour du profil
+    const [interetList, setInteretList] = useState([]);
+    const { reset, register, handleSubmit, watch, formState: { errors }  } = useForm();
+    const final = [];
 
-    event.preventDefault();
-  }
+    useEffect(() => {
+        
 
-  render() {
-    const interetList = [
-        { label: "Animaux", value: 1 },
-        { label: "Bénévolat", value: 2 },
-        { label: "Netflix", value: 3 },
-        { label: "Cryptomonnaie", value: 4 },
-        { label: "Haltérophilie", value: 5 },
-        { label: "Jeux vidéo", value: 6 },
-      ];
+        const requestOptions = {  
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', "authorization": getCookie("token") },
+            body: JSON.stringify(interetList) 
+        };
+        
+        axios.get('http://localhost:3001/api/interet',requestOptions).then(async res => {
+            var data = await res.data;
+             
+            
+
+            for (let  interet of data) {
+              final.push(<input type="checkbox" value={interet.id} {...register('interet')}/>)
+              final.push(<label for="{interet.id}">{interet.name}</label>);
+            }
+
+            setInteretList(final)
+            console.log(interetList)
+            
+        })
+        
+  }, []);
+
+  
+
+    const onSubmit = (data) => {submit(data, getCookie("token"))}
+
+    
     return (
-      <div className="card">
-        <div>
-          <div
-            style={{
-              borderTop: "5px solid #fff ",
-              marginLeft: 450,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-          <div
-            style={{
-              borderTop: "5px solid #000 ",
-              marginLeft: 20,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
+      
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)} >
+
+        <h1>Vos centres d'intêret :</h1>
+
+        <div className="container">
+          <div className="row">
+            <div>{interetList}</div>
+          </div>
         </div>
-
-        <form onSubmit={this.handleSubmit} method="post">
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            Suivant
-          </button>
-
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            precedent
-          </button>
-
-          <h1>Vos centres d'intêret :</h1>
-
-          <div className="container">
-    <div className="row">
-      <div className="col-md-4">
-        <Select options={ interetList } />
-      </div>
-      <div className="col-md-4">
-        <Select options={ interetList } />
-      </div>
-      <div className="col-md-4">
-        <Select options={ interetList } />
-      </div>
-      <div className="col-md-4"></div>
-    </div>
+      <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Mettre a jour le profil</button>
+    </form>
   </div>
 
-        </form>
-      </div>
+        
+      
     );
   }
+
+
+  function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
+
+
+
+function submit(state, user_id) {
+
+  var send = {}
+  send.user_id = user_id;
+  send.interet = state
+
+  console.log(send)
+
+
+      //blockage du bruteforce 
+  const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', "authorization": getCookie("token")},
+      body: JSON.stringify(send)
+  };
+  fetch('http://localhost:3001/api/interet/'+getCookie("userId"), requestOptions)
+      .then(async response => {
+          const isJson = response.headers.get('content-type')?.includes('application/json');
+          const data = isJson && await response.json();
+          alert(data.message)
+      })
+      .catch(error => {
+          console.error('There was an error!', error);
+      });
+    } 
+
