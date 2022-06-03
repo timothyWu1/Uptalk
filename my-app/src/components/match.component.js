@@ -62,11 +62,11 @@ function like(nb, typeOfLike, userList) {
         //blockage du bruteforce 
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ target_id: userList[nb].user_id, type: typeOfLike})
+        headers: { 'Content-Type': 'application/json', "authorization": getCookie("token") },
+        body: JSON.stringify({user_id: getCookie("userId") , target_id: userList[nb].user_id, type: typeOfLike})
     };
     console.log(requestOptions)
-    fetch('http://localhost:3001/api/auth/match/'+getCookie("userId"), requestOptions)
+    fetch('http://localhost:3001/api/match/'+getCookie("userId"), requestOptions)
         .then(async response => {
             const isJson = response.headers.get('content-type')?.includes('application/json');
             const data = isJson && await response.json();
@@ -74,8 +74,9 @@ function like(nb, typeOfLike, userList) {
             // check for error response
             if (!response.ok) {
                 // get error message from body or default to response status
-                alert(data.error)
+                // alert(data.error)
                 const error = (data && data.message) || response.status;
+                console.log(error)
                 return Promise.reject(error);
             } 
 
