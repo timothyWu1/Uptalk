@@ -17,8 +17,7 @@ export default function Index() {
         <Route path="/register" element={<Register/>} />
         <Route path="/Login" element={<Login/>} />
         <Route path="/setup" element={<Setup/>} />
-        <Route path="/setup2" element={<secondProfil/>} />
-        {/* <Route path="/setup3" element={<Profil3/>} /> */}
+
       </Routes>
     </BrowserRouter>
   );
