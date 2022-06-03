@@ -11,7 +11,8 @@ export default function SetupProfil() {
 
 
     const [userList, setUserList] = useState([{}]);
-    const nb = 0;
+     const [count, setCount] = useState(0);
+    
 
     useEffect(() => {
 
@@ -28,32 +29,36 @@ export default function SetupProfil() {
             
 
             setUserList(data); 
+
+            
             
         })
         
     }, []);
 
 
-    
+    console.log(count)
 
     return (
     <div>
         <div className="card"> 
             <div className="center">
-                {userList[nb].firstname} {getAge(userList[nb].birthday)}
+                {userList[count].firstname} {getAge(userList[count].birthday)}
             </div>
             <div className="localisation"></div>
 
             <div className="bio">
-                {userList[nb].bio}
+                {userList[count].bio}
             </div>
         </div>
         <div className="card">
-            <button onClick={() => like(nb, "dislike", userList)}>Dislike</button> <button onClick={() => like(nb, "like", userList)}>Like</button>
+            <button onClick={() => setCount(count + like(count, "dislike", userList))}>Dislike</button> <button onClick={() => setCount(count + like(count, "like", userList))}>Like</button>
         </div>
     </div>
   );
 }
+
+
 
 
 
@@ -70,20 +75,13 @@ function like(nb, typeOfLike, userList) {
         .then(async response => {
             const isJson = response.headers.get('content-type')?.includes('application/json');
             const data = isJson && await response.json();
-            
-            // check for error response
-            if (!response.ok) {
-                // get error message from body or default to response status
-                // alert(data.error)
-                const error = (data && data.message) || response.status;
-                console.log(error)
-                return Promise.reject(error);
-            } 
 
+            
         })
         .catch(error => {
             console.error('There was an error!', error);
         });
+    return 1;
 }
 
 function getCookie(cname) {
