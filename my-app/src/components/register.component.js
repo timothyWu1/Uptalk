@@ -99,27 +99,27 @@ export default class SignUp extends Component {
         <form onSubmit={this.handleSubmit} method="post">
           <h1>Register</h1>
           <div className="form-group">
-                        <label>Lastname
-                            <input name="nom" value={this.state.email}  onChange={this.handleChange} type="text" className="form-control" placeholder="Your firstname" />
-                        </label>
+                        <label>Prénom</label> <br />
+                            <input name="nom" value={this.state.email}  onChange={this.handleChange} type="text" placeholder="Votre prénom" />
+                        
                     </div>
 
-          <br />          
-          <label>password :</label> <br />
+        
+          <label>Mot de passe :</label> <br />
           <input
             type="text"
             value={this.state.password}
             onChange={this.handleChange}
-            placeholder="Enter password"
+            placeholder="Votre mot de passe"
           />
           <br />
-          <label>confirm Password :</label>
+          <label>confirmer mot de passe :</label>
           <br />{" "}
           <input
-            type="password"
+            type="text"
             value={this.state.repeatPassword}
             onChange={this.handleChange}
-            placeholder="Enter password"
+            placeholder="Votre mot de passe"
           />
           <br />
           {/* <input type="submit" value="Register" /> */}

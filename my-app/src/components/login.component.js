@@ -64,22 +64,24 @@ export default class SignUp extends Component {
         return (
             <div className="card">
                 <form onSubmit={this.handleSubmit} method="post">
-                    <h2>Register</h2>
+                <div style={{display: 'flex',  justifyContent:'center', alignItems:'center'}}>
+                    <h2>Connexion</h2>
+                    </div>
 
 
                     <div className="form-group">
-                        <label>Email
-                            <input name="email" value={this.state.email}  onChange={this.handleChange} type="text" className="form-control" placeholder="Enter email" />
-                        </label>
+                        <label>Email</label>
+                        <br/>
+                        <input name="email" value={this.state.email}  onChange={this.handleChange} type="text"  placeholder="Votre Email" />
                     </div>
 
                     <div className="form-group">
-                        <label>Password    
-                            <input name="password" value={this.state.password}  onChange={this.handleChange} type="password" className="form-control" placeholder="Enter password" />
-                        </label>
+                        <label>Mot de passe </label>
+                        <br/>
+                        <input name="password" value={this.state.password}  onChange={this.handleChange} type="text"  placeholder="Votre mot de passe" />
                     </div>
-
-                    <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">login</button>
+                    
+                    <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button" >login</button>
                 </form>
 
                 <p className="forgot-password text-right">

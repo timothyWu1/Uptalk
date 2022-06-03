@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Select from 'react-select';
 
-export default class Biographie extends Component {
+export default class Interet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      biographie: "",
+      nom: "",
+      prenom: "",
     };
 
     this.buttonDisabled = true;
@@ -19,24 +22,23 @@ export default class Biographie extends Component {
   }
 
   handleSubmit(event) {
-    var biographie = this.state.biographie;
-    //vérification de la biographie
+    var nom = this.state.nom;
+    var prenom = this.state.prenom;
 
-    //ajout dans la base de données
+    //mise a jour du profil
 
     event.preventDefault();
   }
 
   render() {
-    const button = document.querySelector("button");
-    if (
-      this.state.biographie.length < 100 ||
-      this.state.biographie.length > 500
-    ) {
-      button.disabled = true;
-    } else {
-      button.disabled = false;
-    }
+    const interetList = [
+        { label: "Animaux", value: 1 },
+        { label: "Bénévolat", value: 2 },
+        { label: "Netflix", value: 3 },
+        { label: "Cryptomonnaie", value: 4 },
+        { label: "Haltérophilie", value: 5 },
+        { label: "Jeux vidéo", value: 6 },
+      ];
     return (
       <div className="card">
         <div>
@@ -50,15 +52,6 @@ export default class Biographie extends Component {
             }}
           ></div>
           <div
-            style={{
-              borderTop: "5px solid #fff ",
-              marginLeft: 20,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-            <div
             style={{
               borderTop: "5px solid #000 ",
               marginLeft: 20,
@@ -86,32 +79,24 @@ export default class Biographie extends Component {
             precedent
           </button>
 
-          <h3>Biographie</h3>
+          <h1>Vos centres d'intêret :</h1>
 
-          <div className="form-group">
-            <textarea
-              name="biographie"
-              value={this.state.biographie}
-              onChange={this.handleChange}
-              class="form-control"
-              placeholder="Biographie"
-              id="floatingTextarea2"
-            ></textarea>
-          </div>
+          <div className="container">
+    <div className="row">
+      <div className="col-md-4">
+        <Select options={ interetList } />
+      </div>
+      <div className="col-md-4">
+        <Select options={ interetList } />
+      </div>
+      <div className="col-md-4">
+        <Select options={ interetList } />
+      </div>
+      <div className="col-md-4"></div>
+    </div>
+  </div>
 
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-            disabled
-          >
-            Register
-          </button>
         </form>
-
-        <p className="forgot-password text-right">
-          Already registered <a href="/login">log in?</a>
-        </p>
       </div>
     );
   }
