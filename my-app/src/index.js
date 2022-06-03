@@ -7,6 +7,7 @@ import Login from './components/login.component'
 import Register from './components/register.component'
 import App from "./App"
 import Setup from "./setup_profil/setup"
+import secondProfil from './setup_profil/profil2.component';
 
 export default function Index() {
   return (
@@ -16,6 +17,7 @@ export default function Index() {
         <Route path="/register" element={<Register/>} />
         <Route path="/Login" element={<Login/>} />
         <Route path="/setup" element={<Setup/>} />
+
       </Routes>
     </BrowserRouter>
   );

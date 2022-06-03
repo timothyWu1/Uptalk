@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -42,6 +44,20 @@ export default function SetupProfil() {
             <form onSubmit={handleSubmit(onSubmit)} >
                 <h1>Profil</h1>
 
+
+                <div>
+                    <div style={{ borderTop: "5px solid #000 ", marginLeft: 350, marginRight: 20, width:100, float:"left" }}></div>
+                    <div style={{ borderTop: "5px solid #fff ", marginLeft: 20, marginRight: 20, width:100, float:"left" }}></div>
+                    <div style={{ borderTop: "5px solid #fff ", marginLeft: 20, marginRight: 20, width:100, float:"left" }}></div>
+                </div>
+
+
+
+                <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Suivant</button>
+
+                    <button type="submit" className="btn btn-dark btn-lg btn-block"  id="submit_button">precedent</button>
+
+                    <h1>Création de profil</h1>
 
                 <div className="form-group">
                     <label>Prenom

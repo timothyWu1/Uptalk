@@ -10,7 +10,7 @@ body{
   
   input[type=text] {
       
-    width: 80%;
+    width: 90%;
     padding: 12px 20px; 
     margin: 8px 0;
     box-sizing: border-box;
@@ -38,6 +38,7 @@ body{
     background-color: #ddd;
     border: none;
     color: black;
+    margin: 8px 0;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
