@@ -114,17 +114,21 @@ class Match {
 
     
     var tab_result = []
+
+    
     
 
     for (var i = 0; i < tab_localisation.length; i++) {  
       if (tab_localisation[i].user_id != user_id){
         if (tab_liked.find(nb => nb === tab_localisation[i].user_id) == undefined  ){
-          tab_result.push({user_id : tab_localisation[i].user_id, lattitude : tab_localisation[i].lattitude, longtitude : tab_localisation[i].longitude, bio : tab_localisation[i].bio, firstname : tab_localisation[i].firstname, birthday : tab_localisation[i].birthday});
+          var interet_tab = await getInteretById(tab_localisation[i].user_id)
+          var question_tab = await getQuestionById(tab_localisation[i].user_id)
+          tab_result.push({user_id : tab_localisation[i].user_id, lattitude : tab_localisation[i].lattitude, longtitude : tab_localisation[i].longitude, bio : tab_localisation[i].bio, firstname : tab_localisation[i].firstname, birthday : tab_localisation[i].birthday, interet : interet_tab, question : question_tab});
         }
       }
     }
 
-    
+    console.log(tab_result)
 
     return tab_result;
 
@@ -151,12 +155,31 @@ class Match {
 
 
   static getLikesById = async (user_id) => {
-    const sql = "  SELECT target_id FROM liked WHERE user_id = '2'";
+    const sql = "  SELECT target_id FROM liked WHERE user_id = ?";
 
     const result = await mysql.query(sql, user_id).catch((err) => err.message);
     return typeof result === "string" ? result : result[0];
   };
+
+  
+
+
 }
+
+async function getInteretById(user_id){
+  const sql = " SELECT interet.name FROM interet_relation INNER JOIN interet ON interet_relation.interet_id = interet.id WHERE user_id = ?";
+
+  const result = await mysql.query(sql, user_id).catch((err) => err.message);
+  console.log(result);
+  return typeof result === "string" ? result : result[0];
+}
+
+async function getQuestionById(user_id){
+  const sql = " SELECT question.name, question_relation.reponse FROM question_relation INNER JOIN question ON question_relation.question_id = question.id WHERE user_id = ?";
+
+  const result = await mysql.query(sql, user_id).catch((err) => err.message);
+  return typeof result === "string" ? result : result[0];
+};
 
 
 module.exports = Match;

@@ -10,25 +10,32 @@ const Math = require("mathjs")
 export default function SetupProfil() {
 
 
-    const [userList, setUserList] = useState([{}]);
+    const userList = []
      const [count, setCount] = useState(0);
+
+
+     
     
 
     useEffect(() => {
-
+        
+        console.log("test")
         const requestOptions = {  
             method: 'GET',
             headers: { 'Content-Type': 'application/json', "authorization": getCookie("token") },
-            body: JSON.stringify(userList) 
         };
         
         axios.get('http://localhost:3001/api/match/'+getCookie("userId"),requestOptions).then(async res => {
             var data = await res.data;
+
+            console.log(data)
+            
+            
             
 
-            
+            userList = (data); 
 
-            setUserList(data); 
+            console.log(data);
 
             
             
@@ -37,7 +44,6 @@ export default function SetupProfil() {
     }, []);
 
 
-    console.log(count)
 
     return (
     <div>
@@ -49,6 +55,31 @@ export default function SetupProfil() {
 
             <div className="bio">
                 {userList[count].bio}
+            </div>
+            <div className="Interet">
+                {userList[count].interet[0].name}
+                {userList[count].interet[1].name}
+                {userList[count].interet[2].name}
+                {userList[count].interet[3].name}
+                {userList[count].interet[4].name}
+            </div>
+            <div className="Question">
+                {userList[count].question[0].name}
+            </div>
+            <div className="Reponse">
+                {userList[count].question[0].reponse}
+            </div>
+            <div className="Question">
+                {userList[count].question[1].name}
+            </div>
+            <div className="Reponse">
+                {userList[count].question[1].reponse}
+            </div>
+            <div className="Question">
+                {userList[count].question[2].name}
+            </div>
+            <div className="Reponse">
+                {userList[count].question[2].reponse}
             </div>
         </div>
         <div className="card">

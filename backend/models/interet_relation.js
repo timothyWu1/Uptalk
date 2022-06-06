@@ -4,11 +4,15 @@ const mysql = require("../config/mysql");
 
 
 class Interet_Relation {
-  static addInteret_Relation = async (user_id, interet_nb) => {
-    const sql = "INSERT INTO interet_relation (user_id, interet_nb) VALUES (?, ?)";
+  static addInteret_Relation = async (user_id, nb_interet) => {
+    var result
+    for(var i = 1; i <= nb_interet; i++){
+      const sql = "INSERT INTO interet_relation (user_id,nb) VALUES (?,?)";
 
-    const result = await mysql.query(sql, [user_id, interet_nb]).catch((err) => err.message);
-    return typeof result === "string" ? result : result[0];
+      result = await mysql.query(sql, [user_id,i]).catch((err) => err.message);
+      // console.log(result);
+    }
+    return result;
   };
 
   static getInteret_RelationById = async (user_id) => {
@@ -26,14 +30,18 @@ class Interet_Relation {
     return typeof result === "string" ? result : result[0];
   };
 
-  static updateInteret_RelationById = async (user_id, interet_id ,interet_nb) => {
-    const sql = "UPDATE interet_relation SET interet_id = ? WHERE user_id = ? AND interet_nb = ?";
-    var values = [interet_id,user_id, interet_nb]
+  static updateInteret_RelationById = async (user_id, interet_tab) => {
+    var result
+    for (var i = 0; i < interet_tab.length; i++) {
+      const sql = "UPDATE interet_relation SET interet_id = ? WHERE user_id = ? AND nb = ?";
+      var values = [interet_tab[i],user_id, i+1]
 
-    mysql.query(sql, values, function (err, result) {
-      if (err) throw err;
-      return result;
-    });
+      mysql.query(sql, values, function (err, result) {
+        if (err) throw err;
+        console.log(result)
+      });
+    }
+    return result;
   };
 
 } 

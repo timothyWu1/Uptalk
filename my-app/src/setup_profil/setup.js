@@ -20,6 +20,16 @@ export default function Setup() {
   //test si la bio est configuré
   // returned = <Biographie/>
 
+  var buttonBack
+  var buttonFor
+
+  if (count > 0){
+    buttonBack = <button onClick={() => setCount(count - 1)} className="btn btn-dark btn-lg btn-block"  id="submit_button">precedent</button>
+  }
+
+  if (count < returned.length -1){
+    buttonFor = <button onClick={() => setCount(count + 1)} className="btn btn-dark btn-lg btn-block" id="submit_button">Suivant</button>
+  }
   //test si 
  
 
@@ -34,10 +44,12 @@ export default function Setup() {
 
       <div>
 
-          <button onClick={() => setCount(count - 1)} className="btn btn-dark btn-lg btn-block"  id="submit_button">precedent</button>
+          
 
 
-          <button onClick={() => setCount(count + 1)} className="btn btn-dark btn-lg btn-block" id="submit_button">Suivant</button>
+          {buttonBack}
+          {buttonFor}
+
 
 
       </div>

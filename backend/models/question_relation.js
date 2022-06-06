@@ -4,11 +4,16 @@ const mysql = require("../config/mysql");
 
 
 class Question_Relation {
-  static addQuestion_Relation = async (user_id, question_nb) => {
-    const sql = "INSERT INTO question_relation (user_id, question_nb) VALUES (?, ?)";
+  static addQuestion_Relation = async (user_id, nb_question) => {
 
-    const result = await mysql.query(sql, [user_id, question_nb]).catch((err) => err.message);
-    return typeof result === "string" ? result : result[0];
+    var result
+    for(var i = 1; i <= nb_question; i++){
+      const sql = "INSERT INTO question_relation (user_id,nb) VALUES (?,?)";
+
+      result = await mysql.query(sql, [user_id,i]).catch((err) => err.message);
+      // console.log(result);
+    }
+    return result;
   };
 
   static getQuestion_RelationById = async (user_id) => {
@@ -26,14 +31,18 @@ class Question_Relation {
     return typeof result === "string" ? result : result[0];
   };
 
-  static updateQuestion_RelationById = async (user_id,question_id, reponse ,question_nb) => {
-    const sql = "UPDATE question_relation SET question_id = ?, reponse = ? WHERE user_id = ? AND question_nb = ?";
-    var values = [question_id, reponse ,user_id, question_nb]
+  static updateQuestion_RelationById = async (user_id,question_id, reponse) => {
+    var result
+    for (var i = 0; i < question_id.length; i++) {
+      const sql = "UPDATE question_relation SET question_id = ?, reponse = ? WHERE user_id = ? AND nb = ?";
+      var values = [question_id[i],reponse[i] ,user_id, i+1]
 
-    mysql.query(sql, values, function (err, result) {
-      if (err) throw err;
-      return result;
-    });
+      mysql.query(sql, values, function (err, result) {
+        if (err) throw err; 
+        console.log(result)
+      });
+    }
+    return result;
   };
 
 } 

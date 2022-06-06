@@ -102,7 +102,7 @@ export default function SignUp() {
             return Promise.reject(error);
           } else { 
             alert(data.message)
-            window.location.replace("/login");  
+            login(state);
           }
 
          
@@ -120,4 +120,58 @@ export default function SignUp() {
       alert(errormsg);
     }
   }
+
+
+function login(state) {
+
+    
+
+
+    // alert('A email was submitted: ' + state.email + "\npassword = " + state.password);
+    // alert('A email was submitted: ' + state);
+    var email = state.email;
+    var password = state.password;
+
+        //blockage du bruteforce 
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, password: password})
+    };
+    console.log(requestOptions)
+    fetch('http://localhost:3001/api/auth/signin', requestOptions)
+        .then(async response => {
+            const isJson = response.headers.get('content-type')?.includes('application/json');
+            const data = isJson && await response.json();
+            
+            // check for error response
+            if (!response.ok) {
+                // get error message from body or default to response status
+                alert(data.error)
+                const error = (data && data.message) || response.status;
+                return Promise.reject(error);
+            } else { 
+                console.log(data.userId)
+                setCookie("token",data.token, 1); 
+                setCookie("userId",data.userId, 1);
+
+                window.location.replace("/setup");
+            }
+
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
+
+        //redirection
+
+} 
+
+
+function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  let expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + "; " + expires + ";path=/";
+}
   

@@ -54,11 +54,11 @@ exports.updateRechercheById = (req, res, next) => {
 } 
 
 exports.updateInteretById = (req, res, next) => {
-  interet_relation.updateInteret_RelationById(req.body.user_id , req.body.interet_id ,req.body.interet_nb)
+  interet_relation.updateInteret_RelationById(req.body.user_id , req.body.interet)
   .then(response => {res.status(200).json(response);})
 }
 
 exports.updateQuestionById = (req, res, next) => {
-  question_relation.updateQuestion_RelationById(req.body.user_id, req.body.question_id, req.body.reponse, req.body.question_nb)
+  question_relation.updateQuestion_RelationById(req.body.user_id, req.body.question_id, req.body.response)
   .then(response => {res.status(200).json(response);})
-}  
+}   
