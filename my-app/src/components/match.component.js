@@ -10,32 +10,25 @@ const Math = require("mathjs")
 export default function SetupProfil() {
 
 
-    const userList = []
+    const [userList, setUserList] = useState([{}]);
      const [count, setCount] = useState(0);
-
-
-     
     
 
     useEffect(() => {
-        
-        console.log("test")
+
         const requestOptions = {  
             method: 'GET',
             headers: { 'Content-Type': 'application/json', "authorization": getCookie("token") },
+            body: JSON.stringify(userList) 
         };
         
         axios.get('http://localhost:3001/api/match/'+getCookie("userId"),requestOptions).then(async res => {
             var data = await res.data;
-
-            console.log(data)
-            
-            
             
 
-            userList = (data); 
+            
 
-            console.log(data);
+            setUserList(data); 
 
             
             
