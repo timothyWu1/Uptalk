@@ -7,14 +7,16 @@ const Math = require("mathjs")
 
 
  
-export default function SetupProfil() {
+export default function Match() {
 
 
-    const [userList, setUserList] = useState([{}]);
+    const [userList, setUserList] = useState([]);
      const [count, setCount] = useState(0);
     
 
     useEffect(() => {
+
+        console.log("test")
 
         const requestOptions = {  
             method: 'GET',
@@ -28,58 +30,59 @@ export default function SetupProfil() {
 
             
 
-            setUserList(data); 
+            setUserList(data);  
 
+            console.log(data);
             
-            
-        })
+        }) 
         
     }, []);
 
 
+    if (userList[count] != undefined){
+        return (
+        <div>
+            <div className="card"> 
+                <div className="center">
+                    {userList[count].firstname} {getAge(userList[count].birthday)}
+                </div>
+                <div className="localisation"></div>
 
-    return (
-    <div>
-        <div className="card"> 
-            <div className="center">
-                {userList[count].firstname} {getAge(userList[count].birthday)}
+                <div className="bio">
+                    {userList[count].bio}
+                </div>
+                <div className="Interet">
+                    {userList[count].interet[0].name}
+                    {userList[count].interet[1].name}
+                    {userList[count].interet[2].name}
+                    {userList[count].interet[3].name}
+                    {userList[count].interet[4].name}
+                </div>
+                <div className="Question">
+                    {userList[count].question[0].name}
+                </div>
+                <div className="Reponse">
+                    {userList[count].question[0].reponse}
+                </div>
+                <div className="Question">
+                    {userList[count].question[1].name}
+                </div>
+                <div className="Reponse">
+                    {userList[count].question[1].reponse}
+                </div>
+                <div className="Question">
+                    {userList[count].question[2].name}
+                </div>
+                <div className="Reponse">
+                    {userList[count].question[2].reponse}
+                </div>
             </div>
-            <div className="localisation"></div>
-
-            <div className="bio">
-                {userList[count].bio}
-            </div>
-            <div className="Interet">
-                {userList[count].interet[0].name}
-                {userList[count].interet[1].name}
-                {userList[count].interet[2].name}
-                {userList[count].interet[3].name}
-                {userList[count].interet[4].name}
-            </div>
-            <div className="Question">
-                {userList[count].question[0].name}
-            </div>
-            <div className="Reponse">
-                {userList[count].question[0].reponse}
-            </div>
-            <div className="Question">
-                {userList[count].question[1].name}
-            </div>
-            <div className="Reponse">
-                {userList[count].question[1].reponse}
-            </div>
-            <div className="Question">
-                {userList[count].question[2].name}
-            </div>
-            <div className="Reponse">
-                {userList[count].question[2].reponse}
+            <div className="card">
+                <button onClick={() => setCount(count + like(count, "dislike", userList))}>Dislike</button> <button onClick={() => setCount(count + like(count, "like", userList))}>Like</button>
             </div>
         </div>
-        <div className="card">
-            <button onClick={() => setCount(count + like(count, "dislike", userList))}>Dislike</button> <button onClick={() => setCount(count + like(count, "like", userList))}>Like</button>
-        </div>
-    </div>
-  );
+        );
+    }
 }
 
 

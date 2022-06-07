@@ -83,8 +83,12 @@ class Match {
     //   if (tab_localisation[i].user_id != user_id){
     //     var distance = Math.acos(Math.sin((Math.pi / 180) * user_latt) * Math.sin((Math.pi / 180) * tab_localisation[i].lattitude) + Math.cos((Math.pi / 180) * user_latt) * Math.cos((Math.pi / 180) * tab_localisation[i].lattitude) * Math.cos((Math.pi / 180) * tab_localisation[i].longitude - (Math.pi / 180) * user_long)) * 6371;
     //     if (distance < user_zone && distance < tab_localisation[i].zone_recherche){
-    //       tab_result.push({user_id : tab_localisation[i].user_id, lattitude : tab_localisation[i].lattitude, longtitude : tab_localisation[i].longitude, bio : tab_localisation[i].bio, firstname : tab_localisation[i].firstname, birthday : tab_localisation[i].birthday})
-    //     }
+          // if (tab_liked.find(nb => nb === tab_localisation[i].user_id) == undefined  ){
+          //   var interet_tab = await getInteretById(tab_localisation[i].user_id)
+          //   var question_tab = await getQuestionById(tab_localisation[i].user_id)
+          //   tab_result.push({user_id : tab_localisation[i].user_id, lattitude : tab_localisation[i].lattitude, longtitude : tab_localisation[i].longitude, bio : tab_localisation[i].bio, firstname : tab_localisation[i].firstname, birthday : tab_localisation[i].birthday, interet : interet_tab, question : question_tab});
+          // } 
+        // }
     //   }
     // }
 
@@ -123,12 +127,14 @@ class Match {
         if (tab_liked.find(nb => nb === tab_localisation[i].user_id) == undefined  ){
           var interet_tab = await getInteretById(tab_localisation[i].user_id)
           var question_tab = await getQuestionById(tab_localisation[i].user_id)
-          tab_result.push({user_id : tab_localisation[i].user_id, lattitude : tab_localisation[i].lattitude, longtitude : tab_localisation[i].longitude, bio : tab_localisation[i].bio, firstname : tab_localisation[i].firstname, birthday : tab_localisation[i].birthday, interet : interet_tab, question : question_tab});
+          if(interet_tab.length == 5 && question_tab.length == 3){
+            tab_result.push({user_id : tab_localisation[i].user_id, lattitude : tab_localisation[i].lattitude, longtitude : tab_localisation[i].longitude, bio : tab_localisation[i].bio, firstname : tab_localisation[i].firstname, birthday : tab_localisation[i].birthday, interet : interet_tab, question : question_tab});
+          }
         }
       }
     }
 
-    console.log(tab_result)
+    // console.log(tab_result)
 
     return tab_result;
 
@@ -145,11 +151,16 @@ class Match {
     return typeof result === "string" ? result : result[0];
   }
 
-  static testMatch = async (user_id, target_id, type_name) => {
-    const sql = "SELECT user_id FROM liked WHERE liked.target_id = ? AND liked.user_id = ? AND liked.type_name = '?'";
+  static testMatch = async (user_id, target_id) => {
+    const sql = "SELECT user_id FROM liked WHERE liked.target_id = ? AND liked.user_id = ? AND liked.type = 'like'";
  
-    const result = await mysql.query(sql, [user_id, target_id, type_name]).catch((err) => err.message);
-    return typeof result === "string" ? result : result[0];
+    const result = await mysql.query(sql, [user_id, target_id]).catch((err) => err.message);
+    var res = typeof result === "string" ? result : result[0];
+    if (res [0] != null){
+      return res[0].user_id
+    } else {
+      return false
+    }
   }
 
 
@@ -167,15 +178,15 @@ class Match {
 }
 
 async function getInteretById(user_id){
-  const sql = " SELECT interet.name FROM interet_relation INNER JOIN interet ON interet_relation.interet_id = interet.id WHERE user_id = ?";
+  const sql = " SELECT interet.name FROM interet_relation INNER JOIN interet ON interet_relation.interet_id = interet.id WHERE user_id = '1'";
 
   const result = await mysql.query(sql, user_id).catch((err) => err.message);
-  console.log(result);
+  // console.log(result);
   return typeof result === "string" ? result : result[0];
 }
 
 async function getQuestionById(user_id){
-  const sql = " SELECT question.name, question_relation.reponse FROM question_relation INNER JOIN question ON question_relation.question_id = question.id WHERE user_id = ?";
+  const sql = " SELECT question.name, question_relation.reponse FROM question_relation INNER JOIN question ON question_relation.question_id = question.id WHERE user_id = '1'";
 
   const result = await mysql.query(sql, user_id).catch((err) => err.message);
   return typeof result === "string" ? result : result[0];
