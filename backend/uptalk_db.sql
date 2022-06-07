@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 06 juin 2022 à 13:21
+-- Généré le : mar. 07 juin 2022 à 14:35
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.1
 
@@ -20,6 +20,25 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `uptalk_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `contact`
+--
+
+CREATE TABLE `contact` (
+  `user_id` int(11) NOT NULL,
+  `contact_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `contact`
+--
+
+INSERT INTO `contact` (`user_id`, `contact_id`) VALUES
+(1, 4),
+(4, 1);
 
 -- --------------------------------------------------------
 
@@ -63,50 +82,26 @@ CREATE TABLE `interet_relation` (
 --
 
 INSERT INTO `interet_relation` (`user_id`, `interet_id`, `nb`) VALUES
-(17, NULL, NULL),
-(17, NULL, NULL),
-(17, NULL, NULL),
-(0, NULL, NULL),
-(18, NULL, 1),
-(18, NULL, 2),
-(18, NULL, 3),
-(18, NULL, 4),
-(18, NULL, 5),
-(19, 6, 1),
-(19, 5, 2),
-(19, 7, 3),
-(19, 4, 4),
-(19, 8, 5),
-(20, NULL, 1),
-(20, NULL, 2),
-(20, NULL, 3),
-(20, NULL, 4),
-(20, NULL, 5),
-(21, NULL, 1),
-(21, NULL, 2),
-(21, NULL, 3),
-(21, NULL, 4),
-(21, NULL, 5),
-(22, NULL, 1),
-(22, NULL, 2),
-(22, NULL, 3),
-(22, NULL, 4),
-(22, NULL, 5),
-(23, NULL, 1),
-(23, NULL, 2),
-(23, NULL, 3),
-(23, NULL, 4),
-(23, NULL, 5),
-(24, 9, 1),
-(24, 3, 2),
-(24, 6, 3),
-(24, 5, 4),
-(24, 7, 5),
-(25, NULL, 1),
-(25, NULL, 2),
-(25, NULL, 3),
-(25, NULL, 4),
-(25, NULL, 5);
+(1, 6, 1),
+(1, 5, 2),
+(1, 7, 3),
+(1, 4, 4),
+(1, 8, 5),
+(2, NULL, 1),
+(2, NULL, 2),
+(2, NULL, 3),
+(2, NULL, 4),
+(2, NULL, 5),
+(3, NULL, 1),
+(3, NULL, 2),
+(3, NULL, 3),
+(3, NULL, 4),
+(3, NULL, 5),
+(4, 3, 1),
+(4, 6, 2),
+(4, 7, 3),
+(4, 4, 4),
+(4, 4, 5);
 
 -- --------------------------------------------------------
 
@@ -125,37 +120,12 @@ CREATE TABLE `liked` (
 --
 
 INSERT INTO `liked` (`user_id`, `target_id`, `type`) VALUES
-(5, 2, 'dislike'),
-(5, 3, 'like'),
-(5, 4, 'dislike'),
-(5, 6, 'like'),
-(5, 7, 'dislike'),
-(5, 8, 'like'),
-(5, 9, 'dislike'),
-(5, 10, 'like'),
-(5, 11, 'dislike'),
-(5, 12, 'like'),
-(2, 3, 'like'),
-(2, 4, 'like'),
-(2, 5, 'like'),
-(2, 6, 'like'),
-(2, 7, 'like'),
-(2, 8, 'like'),
-(2, 9, 'like'),
-(2, 10, 'like'),
-(2, 11, 'like'),
-(2, 12, 'like'),
-(13, 2, 'dislike'),
-(13, 3, 'like'),
-(13, 4, 'like'),
-(13, 5, 'like'),
-(13, 6, 'dislike'),
-(13, 7, 'dislike'),
-(13, 8, 'dislike'),
-(13, 9, 'dislike'),
-(13, 10, 'dislike'),
-(13, 11, 'dislike'),
-(13, 12, 'dislike');
+(4, 1, 'like'),
+(4, 2, 'like'),
+(4, 3, 'like'),
+(1, 2, 'like'),
+(1, 3, 'like'),
+(1, 4, 'like');
 
 -- --------------------------------------------------------
 
@@ -174,6 +144,7 @@ CREATE TABLE `localisation` (
 --
 
 INSERT INTO `localisation` (`user_id`, `longitude`, `lattitude`) VALUES
+(1, NULL, NULL),
 (2, 48.6903, 2.29694),
 (3, 48.9698, 2.28292),
 (4, 48.7894, 2.28696),
@@ -219,30 +190,10 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`user_id`, `firstname`, `lastname`, `gender`, `birthday`, `bio`) VALUES
-(2, 'Damien', 'Drozd', 'Male', '2001-09-04', 'ceci est ma biographie'),
-(3, 'Timothy ', 'Wu', 'Male', '2001-08-08', NULL),
-(4, 'Judith', 'Dubreuil', 'Female', '2000-06-12', NULL),
-(5, 'Clément', 'Lanneretone', 'Female', '2001-12-23', NULL),
-(6, 'Kevin', 'Alves', NULL, NULL, NULL),
-(7, 'Siphano', NULL, NULL, NULL, NULL),
-(8, NULL, NULL, NULL, NULL, NULL),
-(9, NULL, NULL, NULL, NULL, NULL),
-(10, NULL, NULL, NULL, NULL, NULL),
-(11, NULL, NULL, NULL, NULL, NULL),
-(12, NULL, NULL, NULL, NULL, NULL),
-(13, 'Judith', 'Dubreuil', 'Female', '2000-06-12', 'Je m\'appelle Judith et j\'aime le dessin'),
-(14, NULL, NULL, NULL, NULL, NULL),
-(15, NULL, NULL, NULL, NULL, NULL),
-(16, NULL, NULL, NULL, NULL, NULL),
-(17, NULL, NULL, NULL, NULL, NULL),
-(18, NULL, NULL, NULL, NULL, NULL),
-(19, NULL, NULL, NULL, NULL, NULL),
-(20, NULL, NULL, NULL, NULL, NULL),
-(21, NULL, NULL, NULL, NULL, NULL),
-(22, NULL, NULL, NULL, NULL, NULL),
-(23, NULL, NULL, NULL, NULL, NULL),
-(24, 'Damien', 'Drozd', 'Male', '2001-09-07', 'Bonjour, je m\'appelle Damien'),
-(25, NULL, NULL, NULL, NULL, NULL);
+(1, 'Damien', 'Drozd', 'Male', '2001-09-07', 'Bio de Damien'),
+(2, 'Timothy', 'Wu', 'Male', NULL, NULL),
+(3, 'Benjamin', 'Boisson', 'Female', NULL, NULL),
+(4, 'Judith', 'Dubreuil ', 'Female', '2000-06-11', 'Biogarphie de Judith');
 
 -- --------------------------------------------------------
 
@@ -283,24 +234,18 @@ CREATE TABLE `question_relation` (
 --
 
 INSERT INTO `question_relation` (`user_id`, `question_id`, `reponse`, `nb`) VALUES
-(20, NULL, NULL, 1),
-(20, NULL, NULL, 2),
-(20, NULL, NULL, 3),
-(21, NULL, NULL, 1),
-(21, NULL, NULL, 2),
-(21, NULL, NULL, 3),
-(22, NULL, NULL, 1),
-(22, NULL, NULL, 2),
-(22, NULL, NULL, 3),
-(23, NULL, NULL, 1),
-(23, NULL, NULL, 2),
-(23, NULL, NULL, 3),
-(24, 1, 'test1', 1),
-(24, 4, 'test2', 2),
-(24, 5, 'test3', 3),
-(25, NULL, NULL, 1),
-(25, NULL, NULL, 2),
-(25, NULL, NULL, 3);
+(1, 1, 'test1', 1),
+(1, 3, 'test2', 2),
+(1, 4, 'test3', 3),
+(2, NULL, NULL, 1),
+(2, NULL, NULL, 2),
+(2, NULL, NULL, 3),
+(3, NULL, NULL, 1),
+(3, NULL, NULL, 2),
+(3, NULL, NULL, 3),
+(4, 3, 'test1', 1),
+(4, 4, 'eqdezd', 2),
+(4, 5, 'dqzdzd', 3);
 
 -- --------------------------------------------------------
 
@@ -321,6 +266,7 @@ CREATE TABLE `recherche` (
 --
 
 INSERT INTO `recherche` (`user_id`, `preference_gender`, `zone_recherche`, `age_min`, `age_max`) VALUES
+(1, NULL, NULL, NULL, NULL),
 (2, 'bi', 40, 20, 50),
 (3, 'bi', 40, 18, 50),
 (4, 'bi', 40, 18, 50),
@@ -363,16 +309,20 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `email`, `password`) VALUES
-(3, 'timothy@wu', '$2b$10$5gwhszeTgwWYhaNjjGC4fughvORHkxBvVWqD1mJIJuZxpVj6xhESq'),
-(4, 'judith@dubreuil', '$2b$10$Lv7hOrSPq.Y24maUTMJg8OhqtHQhVci.wNNInbuYusY8q4EnWhzc.'),
-(5, 'clement@lanneretone', '$2b$10$YynNqBRUEvzqW2U9eEfN2uNLY7VlkucnChQHgASiFTNTDyRc55Lu6'),
-(15, 'benjamin@boisson', '$2b$10$An7qAZqkW0zOAAz84gjaseekQwXSfOg6Nu9AQnfhLxmQ1pgH.OtG6'),
-(24, 'damien@drozd', '$2b$10$CdEw/CjBIG62udlBIDuEbO5YdER/.hF8DX1ZRHzwwwQaiDiABwzsS'),
-(25, 'test@test', '$2b$10$WuJ49w8N7r9gg8/FWkX48.02fSNqBrsGLIPgOEluHXNiH.2rwCUqO');
+(1, 'damien@drozd', '$2b$10$iR/6kxl3dgi9A9omwWykFue/JxUCPqd.T5y0ohZgscyUd9QxHbHn2'),
+(2, 'timothy@wu', '$2b$10$Y45q5HifOZf1rL99EVXBf.adj8kHM1DJPDHChuXJc6v0/V.zMLXFe'),
+(3, 'benjamin@boisson', '$2b$10$cNdQ0Thga/6As9GB.8yv3.jHnXJQByHmLA1RSnrI.oFkD4db6NPwO'),
+(4, 'judith@dubreuil', '$2b$10$Ag6Kn5Q44s9F0XRhUwmCY.deg5H6rSYEnxaF0Cul5.uTSL14KNf6m');
 
 --
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `contact`
+--
+ALTER TABLE `contact`
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Index pour la table `interet`
@@ -447,7 +397,7 @@ ALTER TABLE `question`
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
