@@ -288,7 +288,7 @@ export default class secondProfil extends Component {
           </select>
         </div>
         <p className="forgot-password text-right">
-          Already registered <a href="/login">log in?</a>
+          Déja enregistré(e) ? <a href="/login">Se connecter</a>
         </p>
       </div>
     );
