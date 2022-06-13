@@ -1,7 +1,9 @@
 const express = require('express');
+var cors = require('cors');
 
 var bodyParser = require('body-parser')
 var app = express()
+app.use(cors());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -11,7 +13,7 @@ app.use(bodyParser.json())
 
 app.use(express.json());
 
-
+ 
 
 
 const profileRoutes = require('./routes/profile');
@@ -19,6 +21,8 @@ const userRoutes = require('./routes/user');
 const interetRoutes = require('./routes/interet');
 const questionRoutes = require('./routes/question');
 const matchRoutes = require('./routes/match');
+const contactRoutes = require('./routes/contact');
+const chatRoutes = require('./routes/chat');
 
 
 
@@ -36,6 +40,8 @@ app.use('/api/auth', userRoutes);
 app.use('/api/interet', interetRoutes);
 app.use('/api/question', questionRoutes);
 app.use('/api/match', matchRoutes);
+app.use('/api/contact', contactRoutes);
+app.use('/api/chat', chatRoutes);
 
 
 

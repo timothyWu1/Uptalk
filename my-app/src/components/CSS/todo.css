@@ -1,15 +1,6 @@
-body{
-    background-color: cadetblue;
-    
-  }
-  h1{
-    font-size: 38px;
-    text-align: center;
 
-  }
-  
-  input[type=text] {
-      
+
+  .inputform{
     width: 90%;
     padding: 12px 20px; 
     margin: 8px 0;
@@ -19,20 +10,10 @@ body{
     background-color: rgb(255, 249, 249);
     color: rgb(10, 10, 10);
     font-family: Arial, Helvetica, sans-serif;
+
   }
   
-  input[type=password] {
-    width: 80%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    left: 50%;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 15px;
-    background-color: rgb(255, 249, 249);
-    color: rgb(10, 10, 10);
-    font-family: Arial, Helvetica, sans-serif;
-  }
+ 
   
   input[type=submit] {
     background-color: #ddd;
@@ -61,13 +42,22 @@ body{
     color: rgb(10, 10, 10);
     font-family: Arial, Helvetica, sans-serif;
   }
-  .card{
+  .login, .register{
     background-color: rgb(104, 203, 206);
-    margin-top: 50px;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    width:500px;
+    min-width: 400px;
     border-radius: 30px;
-    padding: 180px 20px;
+    padding: 20px 20px;
+    position: relative;
+   }
+   .registerform, .loginform{
+      margin-top: 30px;
+      
+      margin-left: auto;
+      margin-right: auto;
    }
   
   

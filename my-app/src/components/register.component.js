@@ -14,23 +14,24 @@ export default function SignUp() {
     var errormsg = "";
 
     return (
-      <div className="card">
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="card register">
+        <form className="registerform" onSubmit={handleSubmit(onSubmit)}>
           <h1>Register</h1>
-          <div className="form-group">
+          <div className="form-group ">
                         <label>Lastname
-                            <input {...register("email", { required: true, maxLength: 20 })} type="text" placeholder="Enter email"/>
+                            <input className="inputform" {...register("email", { required: true, maxLength: 20 })} type="text" placeholder="Enter email"/>
                         </label>
                     </div>
 
           <br />          
           <label>password :</label> <br />
-            <input {...register("password", { required: true, maxLength: 100, minLength:6  })} type="password"  placeholder="Enter password" />
+            <input className="inputform" {...register("password", { required: true, maxLength: 100, minLength:6  })} type="password"  placeholder="Enter password" />
           <br />
           <label>confirm Password :</label>
           <br />{" "}
           <input
             type="password"
+            className="inputform"
             {...register("repeatPassword", { required: true, maxLength: 100, minLength:6 })}
             
             placeholder="Enter password"

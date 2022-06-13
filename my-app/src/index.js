@@ -5,9 +5,10 @@ import './index.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import Login from './components/login.component'
 import Register from './components/register.component'
-import App from "./App"
+import App from "./main/App"
 import Setup from "./setup_profil/setup"
-import secondProfil from './setup_profil/profil2.component';
+import Chat from "./chat/chat"
+
 
 export default function Index() {
   return (
@@ -17,7 +18,7 @@ export default function Index() {
         <Route path="/register" element={<Register/>} />
         <Route path="/Login" element={<Login/>} />
         <Route path="/setup" element={<Setup/>} />
-
+        <Route path="/chat" element={<Chat/>} />
       </Routes>
     </BrowserRouter>
   );

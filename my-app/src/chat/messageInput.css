@@ -1,0 +1,10 @@
+
+
+.newMessage {
+  
+  padding: 0.5rem;
+  right: 5%;
+  left: 20%;
+  position: fixed;
+  bottom: 20px;
+}

@@ -15,24 +15,24 @@ export default function SignIn() {
 
     
         return (
-            <div className="card">
-                <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="card login">
+                <form className="loginform" onSubmit={handleSubmit(onSubmit)}>
                     <h2>Connexion</h2>
 
 
                     <div className="form-group">
                         <label>Email
-                            <input name="email" {...register("email", { required: true, maxLength: 20 })} type="text" className="form-control" placeholder="Enter email" />
+                            <input  name="email" {...register("email", { required: true, maxLength: 20 })} type="text" className="form-control inputform" placeholder="Enter email" />
                         </label>
                     </div>
 
                     <div className="form-group">
                         <label>Password    
-                            <input name="password" {...register("password", { required: true, maxLength: 100  })} type="password" className="form-control" placeholder="Enter password" />
+                            <input name="password" {...register("password", { required: true, maxLength: 100  })} type="password" className="form-control inputform" placeholder="Enter password" />
                         </label>
                     </div>
 
-                    <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">login</button>
+                    <button type="submit" className="btn btn-dark btn-lg btn-block submitbutton" id="submit_button">login</button>
                 </form>
 
                 <p className="forgot-password text-right">

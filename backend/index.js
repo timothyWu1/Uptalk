@@ -1,5 +1,10 @@
 const http = require('http');
 const app = require('./app');
+var chat = require('./chat');
+const socketio = require("socket.io");
+
+
+
 
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -43,6 +48,14 @@ server.on('listening', () => {
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
   console.log('Listening on ' + bind);
 });
+
+var io = socketio(server,{
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+});
+chat(io);
 
 
 

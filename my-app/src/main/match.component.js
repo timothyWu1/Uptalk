@@ -16,7 +16,7 @@ export default function Match() {
 
     useEffect(() => {
 
-        console.log("test")
+        // console.log("test")
 
         const requestOptions = {  
             method: 'GET',
@@ -39,7 +39,7 @@ export default function Match() {
     }, []);
 
 
-    if (userList[count] != undefined){
+    if (userList[count] !== undefined){
         return (
         <div>
             <div className="card"> 

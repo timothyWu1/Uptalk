@@ -102,6 +102,7 @@ class Match {
     const result = await mysql.query(sql,user_id).catch((err) => err.message);
 
     var tab_localisation = typeof result === "string" ? result : result[0];
+    // console.log(tab_localisation)
 
     const sql2 = "SELECT profile.user_id FROM liked INNER JOIN profile ON profile.user_id = liked.target_id WHERE (liked.user_id = ?) ;"
     const liked = await mysql.query(sql2,user_id).catch((err) => err.message);
@@ -113,7 +114,6 @@ class Match {
       
     }
 
-    // console.log(tab_liked);
 
 
     
@@ -125,8 +125,10 @@ class Match {
     for (var i = 0; i < tab_localisation.length; i++) {  
       if (tab_localisation[i].user_id != user_id){
         if (tab_liked.find(nb => nb === tab_localisation[i].user_id) == undefined  ){
+          
           var interet_tab = await getInteretById(tab_localisation[i].user_id)
           var question_tab = await getQuestionById(tab_localisation[i].user_id)
+          console.log(interet_tab)
           if(interet_tab.length == 5 && question_tab.length == 3){
             tab_result.push({user_id : tab_localisation[i].user_id, lattitude : tab_localisation[i].lattitude, longtitude : tab_localisation[i].longitude, bio : tab_localisation[i].bio, firstname : tab_localisation[i].firstname, birthday : tab_localisation[i].birthday, interet : interet_tab, question : question_tab});
           }
@@ -134,7 +136,7 @@ class Match {
       }
     }
 
-    // console.log(tab_result)
+    console.log(tab_result)
 
     return tab_result;
 

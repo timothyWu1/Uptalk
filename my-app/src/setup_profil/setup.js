@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactDOM from 'react-dom/client';
 import '../index.css';
 import '../../node_modules/bootstrap/dist/css/bootstrap.min.css'
@@ -43,22 +43,11 @@ export default function Setup() {
       </div>
 
       <div>
-
-          
-
-
           {buttonBack}
           {buttonFor}
-
-
-
       </div>
       {returned[count]}
     </div>
-    
-    
-
-   
   );
 }
 
