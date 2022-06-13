@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 07 juin 2022 à 14:35
+-- Généré le : lun. 13 juin 2022 à 22:10
 -- Version du serveur : 10.4.22-MariaDB
 -- Version de PHP : 8.1.1
 
@@ -38,7 +38,13 @@ CREATE TABLE `contact` (
 
 INSERT INTO `contact` (`user_id`, `contact_id`) VALUES
 (1, 4),
-(4, 1);
+(4, 1),
+(1, 4),
+(4, 1),
+(1, 4),
+(4, 1),
+(1, 2),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -169,6 +175,105 @@ INSERT INTO `localisation` (`user_id`, `longitude`, `lattitude`) VALUES
 (23, NULL, NULL),
 (24, NULL, NULL),
 (25, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `message`
+--
+
+CREATE TABLE `message` (
+  `user_id` int(11) NOT NULL,
+  `target_id` int(11) NOT NULL,
+  `message_value` text NOT NULL,
+  `message_time` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `message`
+--
+
+INSERT INTO `message` (`user_id`, `target_id`, `message_value`, `message_time`) VALUES
+(1, 2, 'tdxtz', '2022-06-08 00:00:00'),
+(1, 4, 'test', '2022-06-08 21:18:46'),
+(1, 4, 'test', '2022-06-08 21:26:55'),
+(1, 4, 'test', '2022-06-08 21:29:13'),
+(1, 4, 'test', '2022-06-08 21:29:37'),
+(1, 4, 'ceci est un message', '2022-06-08 21:30:33'),
+(1, 2, 'test', '2022-06-08 22:24:54'),
+(1, 2, 'test', '2022-06-08 22:24:56'),
+(1, 4, 'kk', '2022-06-09 09:38:24'),
+(1, 4, 'test', '2022-06-09 09:38:49'),
+(1, 0, 'test', '2022-06-09 09:47:25'),
+(1, 2, 'test', '2022-06-09 10:00:23'),
+(1, 2, 'de', '2022-06-09 10:01:13'),
+(1, 4, 'test', '2022-06-09 11:01:56'),
+(1, 3, 'test', '2022-06-09 11:49:02'),
+(1, 2, 'test', '2022-06-09 13:58:59'),
+(4, 1, 'test', '2022-06-09 14:06:04'),
+(1, 4, 'test', '2022-06-09 14:33:48'),
+(4, 1, 'test', '2022-06-09 14:38:15'),
+(1, 4, 'test', '2022-06-09 14:38:51'),
+(4, 1, 'msg', '2022-06-09 15:25:29'),
+(4, 1, 'test', '2022-06-09 15:28:48'),
+(4, 1, 'message', '2022-06-09 15:29:06'),
+(4, 1, 'test', '2022-06-09 15:29:25'),
+(4, 1, 'msg', '2022-06-09 15:29:48'),
+(4, 1, 'gg', '2022-06-09 15:38:38'),
+(1, 4, 'hehe', '2022-06-09 15:38:45'),
+(4, 1, 'test', '2022-06-09 15:39:08'),
+(4, 1, 'nn', '2022-06-09 15:42:51'),
+(4, 1, 'test', '2022-06-09 15:45:03'),
+(4, 1, 'vr', '2022-06-09 15:45:54'),
+(4, 1, 'vv', '2022-06-09 15:46:09'),
+(4, 1, 'mm', '2022-06-09 15:46:15'),
+(4, 1, 'gg', '2022-06-09 15:48:03'),
+(4, 1, 'hh', '2022-06-09 15:49:25'),
+(4, 1, 'vr', '2022-06-09 15:50:17'),
+(4, 1, 'hh', '2022-06-09 15:50:29'),
+(1, 2, 'hh', '2022-06-09 15:50:37'),
+(4, 1, 'tt', '2022-06-09 15:54:05'),
+(4, 1, 'ff', '2022-06-09 15:54:57'),
+(4, 1, 'ff', '2022-06-09 15:55:02'),
+(4, 1, 'gg', '2022-06-09 15:55:29'),
+(4, 1, 'gg', '2022-06-09 15:55:30'),
+(4, 1, 'g', '2022-06-09 15:55:36'),
+(1, 2, 'gg', '2022-06-09 15:55:43'),
+(4, 1, 'hh', '2022-06-09 15:56:18'),
+(4, 1, 'hh', '2022-06-09 15:56:19'),
+(4, 1, 'h', '2022-06-09 15:56:20'),
+(4, 1, '', '2022-06-09 15:56:20'),
+(4, 1, 'hh', '2022-06-09 15:56:37'),
+(4, 1, 'ùm', '2022-06-09 15:56:39'),
+(4, 1, 'jj', '2022-06-09 15:57:08'),
+(4, 1, '12', '2022-06-09 16:02:55'),
+(4, 1, 'jj', '2022-06-09 16:03:55'),
+(1, 4, 'jj', '2022-06-09 16:04:01'),
+(4, 1, 'hh', '2022-06-09 16:05:19'),
+(4, 1, 'hh', '2022-06-09 16:05:21'),
+(4, 1, 'vv', '2022-06-09 16:06:28'),
+(4, 1, 'jj', '2022-06-09 16:07:04'),
+(1, 4, 'uu', '2022-06-09 16:07:35'),
+(4, 1, 'rr', '2022-06-09 16:11:08'),
+(4, 1, 'bb', '2022-06-09 16:15:20'),
+(4, 1, 'jj', '2022-06-09 16:16:21'),
+(4, 1, 'uu', '2022-06-09 16:16:31'),
+(1, 2, 'tt', '2022-06-09 16:17:33'),
+(1, 4, 'rr', '2022-06-09 16:18:01'),
+(4, 1, 'rr', '2022-06-09 16:18:04'),
+(4, 1, 'rr', '2022-06-09 16:18:11'),
+(1, 3, 'rr', '2022-06-09 16:18:15'),
+(4, 1, 'rr', '2022-06-09 16:23:31'),
+(4, 1, 'gg', '2022-06-09 16:24:08'),
+(4, 1, 'gg', '2022-06-09 16:24:11'),
+(4, 1, 'hh', '2022-06-09 16:25:59'),
+(4, 1, 'kk', '2022-06-09 16:26:09'),
+(1, 4, 'test', '2022-06-09 18:09:42'),
+(1, 4, 'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', '2022-06-10 14:03:16'),
+(1, 4, 'sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', '2022-06-10 14:03:25'),
+(1, 4, 'ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss', '2022-06-10 14:03:30'),
+(1, 2, 'Timothy je sais pas ce que tu fais mais tu pues <3 ', '2022-06-10 15:03:23'),
+(1, 4, 'bonsoir je suce pour 5$ ou gratuit si vous etes beau cliquez sur ce lien afin de mettre votre carte bleu : https//tractformelenchon.com ', '2022-06-10 16:14:06');
 
 -- --------------------------------------------------------
 
@@ -344,6 +449,13 @@ ALTER TABLE `interet_relation`
 --
 ALTER TABLE `localisation`
   ADD PRIMARY KEY (`user_id`);
+
+--
+-- Index pour la table `message`
+--
+ALTER TABLE `message`
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `target_id` (`target_id`);
 
 --
 -- Index pour la table `profile`
