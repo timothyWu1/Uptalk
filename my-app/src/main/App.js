@@ -6,7 +6,9 @@ import Match from "./match.component"
 
 
 function App() {
-  if (getCookie("userId" !== null)){
+
+  console.log(getCookie("userId"))
+  if (getCookie("userId") !== ""){
     return (
       <div className="App">
           <Match/>

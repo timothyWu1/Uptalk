@@ -35,9 +35,9 @@ export default function SecondProfil() {
     const onSubmit = (data) => {submit(data, userList)}
     return (
       <div>
-        <form onSubmit={handleSubmit(onSubmit)} >
+        <form onSubmit={handleSubmit(onSubmit)} className="profilform">
 
-          <h1>Profil</h1>
+          <h1 className="title">Profil</h1>
 
           <div className="form-group">
             <label>

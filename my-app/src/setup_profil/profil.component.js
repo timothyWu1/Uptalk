@@ -42,17 +42,10 @@ export default function SetupProfil() {
         
 
 
-            <form onSubmit={handleSubmit(onSubmit)} >
-                <h1>Profil</h1>
+            <form onSubmit={handleSubmit(onSubmit)} className="profilform">
+                <h1 className="title">Profil</h1>
 
-
-                
-
-
-
-                
-
-                    <h1>Création de profil</h1>
+                    <h1 className="title">Création de profil</h1>
 
                 <div className="form-group">
                     <label>Prenom

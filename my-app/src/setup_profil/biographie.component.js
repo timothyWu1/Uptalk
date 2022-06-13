@@ -37,9 +37,9 @@ export default function Biographie() {
     return (
       <div>
 
-        <form onSubmit={handleSubmit(onSubmit)} >
+        <form onSubmit={handleSubmit(onSubmit)} className="profilform">
         
-          <h3>Biographie</h3>
+          <h1 className="title">Biographie</h1>
 
           <div className="form-group">
             <textarea name="biographie"

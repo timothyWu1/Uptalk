@@ -66,8 +66,8 @@ export default function QuestionProfil() {
     return (
       
       <div>
-        <form onSubmit={handleSubmit(onSubmit)} >
-          <h1>Decrivez vous :</h1>
+        <form onSubmit={handleSubmit(onSubmit)} className="profilform" >
+          <h1 className="title">Decrivez vous :</h1>
 
           <div>
             <select {...register("question1")}>

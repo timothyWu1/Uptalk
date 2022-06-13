@@ -68,9 +68,9 @@ export default function InteretProfil() {
     return (
       
     <div>
-      <form onSubmit={handleSubmit(onSubmit)} >
+      <form onSubmit={handleSubmit(onSubmit)} className="profilform">
 
-        <h1>Vos centres d'intêret :</h1>
+        <h1 className="title">Vos centres d'intêret :</h1>
 
         <div className="container">
           <div className="row">

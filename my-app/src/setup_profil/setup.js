@@ -14,9 +14,14 @@ export default function Setup() {
   //test si le profil n'est pas configuré
 
   const [count, setCount] = useState(0);
+
+  var navbar = [];
   
   returned = [<Profil/>, <Profil2/>, <Biographie/>, <Interet/>, <Question/>]
 
+  for (var i = 0; i < returned.length; i++) {
+    navbar.push(<div style={{ borderTop: "5px solid #fff ", marginLeft: 20, marginRight: 20, width:30, float:"left" }}></div>)
+  }
   //test si la bio est configuré
   // returned = <Biographie/>
 
@@ -34,17 +39,20 @@ export default function Setup() {
  
 
   return (
-    <div className="card">
+    <div className="card profil-card">
 
       <div>
-          <div style={{ borderTop: "5px solid #000 ", marginLeft: 350, marginRight: 20, width:100, float:"left" }}></div>
-          <div style={{ borderTop: "5px solid #fff ", marginLeft: 20, marginRight: 20, width:100, float:"left" }}></div>
-          <div style={{ borderTop: "5px solid #fff ", marginLeft: 20, marginRight: 20, width:100, float:"left" }}></div>
+          {/* <div style={{ borderTop: "5px solid #000 ", marginLeft: 350, marginRight: 20, width:100, float:"left" }}></div> */}
+          {navbar}
       </div>
 
-      <div>
+      <div className="page-select">
+        <div className="button">
           {buttonBack}
+        </div>
+        <div className="button">
           {buttonFor}
+        </div>
       </div>
       {returned[count]}
     </div>
