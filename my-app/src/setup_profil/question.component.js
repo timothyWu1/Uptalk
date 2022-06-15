@@ -69,28 +69,46 @@ export default function QuestionProfil() {
         <form onSubmit={handleSubmit(onSubmit)} className="profilform" >
           <h1 className="title">Decrivez vous :</h1>
 
-          <div>
-            <select {...register("question1")}>
-                <option value="q">question 1 :</option>
-              {questionList}
-            </select>
-            <input {...register("response1")} type="text" className="form-control" placeholder="Votre réponse" />
+          <div className="form-group">
+            <div className="form-group">
+              <select {...register("question1")} className="form-select question">
+                  <option value="q">question 1 :</option>
+                {questionList}
+              </select>
+            </div>
+            <div className="form-group">
+              <input {...register("response1")} type="text" className="form-control" placeholder="Votre réponse" />
+            </div>
           </div>
-          <div>
-            <select {...register("question2")}>
-                <option value="q">question 2 :</option>
-              {questionList}
-            </select>
-            <input {...register("response2")} type="text" className="form-control" placeholder="Votre réponse" />
+
+          <div className="form-group">
+            <div className="form-group">
+              <select {...register("question2")} className="form-select question">
+                  <option value="q">question 2 :</option>
+                {questionList}
+              </select>
+            </div>
+            <div className="form-group">
+              <input {...register("response2")} type="text" className="form-control" placeholder="Votre réponse" />
+            </div>
           </div>
-          <div>
-            <select {...register("question3")}>
-                <option value="q">question 3 :</option>
-              {questionList}
-            </select>
-            <input {...register("response3")} type="text" className="form-control" placeholder="Votre réponse" />
+
+          <div className="form-group">
+            <div className="form-group">
+              <select {...register("question3")} className="form-select question">
+                  <option value="q">question 3 :</option>
+                {questionList}
+              </select>
+            </div>
+            <div className="form-group">
+              <input {...register("response3")} type="text" className="form-control" placeholder="Votre réponse" />
+            </div>
           </div>
+
+          
+
           <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Mettre a jour le profil</button>
+        
         </form>
       </div>
     );

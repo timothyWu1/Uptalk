@@ -7,6 +7,7 @@ import Profil2 from "./profil2.component"
 import Biographie from "./biographie.component"
 import Interet from "./interet.component"
 import Question from "./question.component"
+import Recherche from "./profil3.component"
 
 
 export default function Setup() {
@@ -17,10 +18,14 @@ export default function Setup() {
 
   var navbar = [];
   
-  returned = [<Profil/>, <Profil2/>, <Biographie/>, <Interet/>, <Question/>]
+  returned = [<Profil/>, <Profil2/>, <Biographie/>, <Interet/>, <Question/>, <Recherche/>]
 
   for (var i = 0; i < returned.length; i++) {
-    navbar.push(<div style={{ borderTop: "5px solid #fff ", marginLeft: 20, marginRight: 20, width:30, float:"left" }}></div>)
+    if(i === count){
+      navbar.push(<div style={{ borderTop: "5px solid #000 ", marginLeft: 10, marginRight: 10, width:50, float:"left" }}></div>)
+    } else {
+      navbar.push(<div style={{ borderTop: "5px solid #fff ", marginLeft: 10, marginRight: 10, width:50, float:"left" }}></div>)
+    }
   }
   //test si la bio est configuré
   // returned = <Biographie/>
@@ -30,10 +35,14 @@ export default function Setup() {
 
   if (count > 0){
     buttonBack = <button onClick={() => setCount(count - 1)} className="btn btn-dark btn-lg btn-block"  id="submit_button">precedent</button>
+  } else{
+    buttonBack = <button onClick={() => setCount(count - 1)} className="btn btn-dark btn-lg btn-block"  id="submit_button" disabled>precedent</button>
   }
 
   if (count < returned.length -1){
     buttonFor = <button onClick={() => setCount(count + 1)} className="btn btn-dark btn-lg btn-block" id="submit_button">Suivant</button>
+  } else{
+    buttonFor = <button onClick={() => setCount(count + 1)} className="btn btn-dark btn-lg btn-block" id="submit_button" disabled>Suivant</button>
   }
   //test si 
  
@@ -41,8 +50,7 @@ export default function Setup() {
   return (
     <div className="card profil-card">
 
-      <div>
-          {/* <div style={{ borderTop: "5px solid #000 ", marginLeft: 350, marginRight: 20, width:100, float:"left" }}></div> */}
+      <div className="nav">
           {navbar}
       </div>
 

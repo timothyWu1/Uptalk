@@ -24,11 +24,13 @@ export default function InteretProfil() {
       
       axios.get('http://localhost:3001/api/interet',requestOptions).then(async res => {
         var data = await res.data;
-        console.log(data);
+        
 
         for (let  interet of data) {
-          final.push(<input type="checkbox" value={interet.id} id={interet.id} {...register('interet')}/>)
-          final.push(<label for="{interet.id}">{interet.name}</label>);
+          final.push(<div>
+                      <input class="form-check-input" type="checkbox" value={interet.id} id={interet.id} {...register('interet')}/>
+                      <label class="form-check-label" for="{interet.id}">{interet.name}</label>
+                    </div>);
         }
 
         setInteretList(final)
@@ -43,19 +45,13 @@ export default function InteretProfil() {
       };
       axios.get('http://localhost:3001/api/profile/interet/'+getCookie("userId"),requestOptions).then(async res => {
       var data = await res.data;
-      var tab = []
-      for(var i = 0; i < data.length; i++){
-        if (data[i].interet_id != null){
-          console.log(data[i].interet_id);
-          tab.push(data[i].interet_id) 
-          document.getElementById(data[i].interet_id).defaultChecked = true;
+      console.log(data);
+      for(var i of data){
+        if (i.interet_id != null){
+          console.log(i.interet_id);
+          document.getElementById(i.interet_id).checked  = true;
         }
       }
-      
-      let defaultChecked = {}; 
-      
-      defaultChecked.interet = tab; 
-      reset({ ...defaultChecked }); 
     })
         
   }, []);
@@ -110,26 +106,26 @@ function submit(state, user_id) {
   send.user_id = user_id;
   send.interet = state.interet
 
-  if(state.interet.length <= 5){
+  if(state.interet.length === 5){
 
 
       //blockage du bruteforce 
-  const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', "authorization": getCookie("token")},
-      body: JSON.stringify(send)
-  };
-  fetch('http://localhost:3001/api/profile/interet/'+getCookie("userId"), requestOptions)
-      .then(async response => {
-          const isJson = response.headers.get('content-type')?.includes('application/json');
-          const data = isJson && await response.json();
-          alert(data.message)
-      })
-      .catch(error => {
-          console.error('There was an error!', error);
-      });
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', "authorization": getCookie("token")},
+        body: JSON.stringify(send)
+    };
+    fetch('http://localhost:3001/api/profile/interet/'+getCookie("userId"), requestOptions)
+        .then(async response => {
+            const isJson = response.headers.get('content-type')?.includes('application/json');
+            const data = isJson && await response.json();
+            alert(data.message) 
+        })
+        .catch(error => {
+            console.error('There was an error!', error);
+        });
     }  else { 
-      alert("vous devez choissir 5 centres d'intêret maximum")
+      alert("vous devez choissir 5 centres d'intêret")
     }
   }
 

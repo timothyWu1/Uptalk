@@ -1,7 +1,6 @@
-import React, { Component, useState } from "react";
+import React from "react";
 import "./CSS/todo.css";
 import { useForm } from "react-hook-form";
-import { useCookies } from "react-cookie";
 
 
 export default function SignIn() {
@@ -48,14 +47,9 @@ export default function SignIn() {
 export function submit(state) {
 
         
-
-
-        // alert('A email was submitted: ' + state.email + "\npassword = " + state.password);
-        // alert('A email was submitted: ' + state);
         var email = state.email;
         var password = state.password;
 
-            //blockage du bruteforce 
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

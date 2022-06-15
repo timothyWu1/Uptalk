@@ -16,7 +16,6 @@
  
   
   input[type=submit] {
-    background-color: #ddd;
     border: none;
     color: black;
     margin: 8px 0;
@@ -31,28 +30,16 @@
     margin-left: 22px;
   }
   
-  select {
-    width: 20%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 15px;
-    background-color: rgb(255, 255, 255);
-    color: rgb(10, 10, 10);
-    font-family: Arial, Helvetica, sans-serif;
-  }
   .login, .register{
-    background-color: rgb(104, 203, 206);
-    margin-top: 10%;
-    margin-left: auto;
-    margin-right: auto;
-    width:500px;
-    min-width: 400px;
-    border-radius: 30px;
-    padding: 20px 20px;
-    position: relative;
-   }
+  background-color: rgb(104, 203, 206);
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+  width:500px;
+  min-width: 400px;
+  padding: 20px 20px;
+  position: relative;
+}
    .registerform, .loginform{
       margin-top: 30px;
       
@@ -62,7 +49,7 @@
   
   
   .container{
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
     border-style: hidden;
     border-radius: 15px;
     padding:18px;

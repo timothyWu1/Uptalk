@@ -1,205 +1,207 @@
 
-import { Dimensions, View, Image } from "react-native";
-import React, { Component } from "react";
+
+import React, {  useEffect, useState  } from "react";
+import { useForm } from "react-hook-form";
 import "./styles/styles.css";
-
-
-
-const { width, height } = Dimensions.get("screen");
-
-export default class secondProfil extends Component {
+import axios from "axios";
+import google from "google-maps"
 
 
 
 
 
-  // $('#multi').mdbRange({
-  //   single: {
-  //     active: true,
-  //     multi: {
-  //       active: true,
-  //       rangeLength: 1
-  //     },
-  //   }
-  // });
-  constructor(props) {
-    super(props);
-    this.state = {
-      anniversaire: "",
-      sexe: "",
-    };
 
-    this.buttonDisabled = true;
-    this.errormsg = "";
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+export default function Recherche() {
+
+    const [userList, setUserList] = useState({});
+    const { reset, register, handleSubmit, watch, formState: { errors }  } = useForm();
+
+    
+
+  useEffect(() => {
+        
+
+        const requestOptions = {  
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', "authorization": getCookie("token") },
+            body: JSON.stringify(userList) 
+        };
+        
+        axios.get('http://localhost:3001/api/profile/recherche/'+getCookie("userId"),requestOptions).then(async res1 => {
+          axios.get('http://localhost:3001/api/profile/localisation/'+getCookie("userId"),requestOptions).then(async res2 => {
+            var data = await res1.data[0];
+            data.longitude = await res2.data[0].longitude; 
+            data.latitude = await res2.data[0].lattitude;
+            setUserList(data); 
+            console.log(data)
+            let defaultValues = {};  
+            defaultValues.longitude = data.longitude;
+            defaultValues.latitude = data.latitude;
+            defaultValues.preference_gender = data.preference_gender;
+            defaultValues.age_min = data.age_min;
+            defaultValues.age_max = data.age_max;
+            defaultValues.searchRange = data.zone_recherche;
+            reset({ ...defaultValues });   
+               
+            document.getElementById("zone").value = document.getElementById("searchRange").value
+        })
+      })
+         
+  }, []);
+
+  const onSubmit = (data) => {submit(data, userList)}
+
+  // document.getElementById("searchRange").value
+  if(document.getElementById("searchRange") !== null){
+    document.getElementById("zone").value = document.getElementById("searchRange").value
   }
 
-  handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-
-  handleSubmit(event) {
-    var anniversaire = this.state.anniversaire;
-    var sexe = this.state.sexe;
-
-    //mise a jour du profil
-
-    event.preventDefault();
-  }
-
-  render() {
+    
     return (
-      <div className="card">
-        <div
-          style={{
-            alignContent: "center",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <div
-            style={{
-              borderTop: "5px solid #fff ",
-              marginLeft: 360,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-          <div
-            style={{
-              borderTop: "5px solid #fff ",
-              marginLeft: 20,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-          <div
-            style={{
-              borderTop: "5px solid #000 ",
-              marginLeft: 20,
-              marginRight: 20,
-              width: 100,
-              float: "left",
-            }}
-          ></div>
-        </div>
 
-        <form onSubmit={this.handleSubmit} method="post">
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            Suivant
-          </button>
+      <div>
+        
+        <button onClick={getLocation} className="btn btn-dark btn-lg btn-block" >Localiser</button>
 
-          <button
-            type="submit"
-            className="btn btn-dark btn-lg btn-block"
-            id="submit_button"
-          >
-            precedent
-          </button>
-        </form>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="profilform">
+
+          <label>Longitude</label>
+          <input {...register("longitude")} type="text" id="longitude" class="form-control ex1" disabled></input>
+
+          <label>Latitude</label>
+          <input {...register("latitude")} type="text" id="latitude" class="form-control ex1" disabled></input>
+          
 
         <div className="form-group">
-          <label>
-            Localisation
-            <input
-              name="ville"
-              value={this.state.city}
-              onChange={this.handleChange}
-              type="text"
-              className="form-control"
-              placeholder="votre ville"
-            />
-          </label>
-          <label>
-            <input
-              name="postal"
-              value={this.state.city}
-              onChange={this.handleChange}
-              type="text"
-              className="form-control"
-              placeholder="Code postal"
-            />
-          </label>
-          <select>
-            <option value="q">recherche :</option>
-            <option value="q">
-              Moins de 1 kilomètres
-            </option>
-            <option value="q">
-            Moins de 3 kilomètres
-            </option>
-            <option value="q">
-            Moins de 5 kilomètres
-            </option>
-            <option value="q">
-            plus de 5 kilomètres
-            </option>
-          </select>
 
-          {/* <ReactSlider
-    className="horizontal-slider"
-    thumbClassName="example-thumb"
-    trackClassName="example-track"
-    renderThumb={(props, state) => <div {...props}>{state.valueNow}</div>}
-/> */}
-          {/* <form class="multi-range-field my-5 pb-5">Zone de recherche
-  <input id="multi" class="multi-range" type="range" />
-</form> */}
 
-{/* <div class="container mt-3">
-  <div class="multi-ranges-basic"></div>
-<div id="multi-ranges-basic-value" class="mt-3">
-  Value:
-  <span class="d-flex flex-column">
-    <div>First:</div>
-    <div>Second:</div>
-  </span>
-</div>
-</div> */}
+          <label class="form-label" for="customRange2">Zone de recherche</label>
+          <div class="range">
+            <input {...register("searchRange", { required: true})} type="range" class="form-range" min="0" max="100" id="searchRange" />
+          </div>
+          <input type="text" id="zone" class="form-control ex1" disabled></input>
 
 
 
         </div>
         <div>
           <label>
-            Votre Age
+            Age minimum recherché
             <input
-              name="age"
-              value={this.state.old}
-              onChange={this.handleChange}
               type="text"
               className="form-control"
-              placeholder="votre age"
+              placeholder="Age minimum"
+              {...register("age_min", { required: true})}
             />
           </label>
-          <select>
-            <option value="0">recherche :</option>
-            <option value="R1">
-              plus ou moins 1 ans
-            </option>
-            <option value="R2">
-            plus ou moins 3 ans
-            </option>
-            <option value="R3">
-            plus ou moins 5 ans
-            </option>
-            <option value="R4">
-              peu m'importe
-            </option>
-          </select>
+          
         </div>
-        <p className="forgot-password text-right">
-          Déja enregistré(e) ? <a href="/login">Se connecter</a>
-        </p>
+        <div>
+          <label>
+            Age maximum recherché
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Age maximum"
+              {...register("age_max", { required: true})}
+            />
+          </label>
+          
+        </div>
+
+        <div className="form-group">
+          <label>
+            Preférence sexuelle
+            <div className="container">
+              <div>
+                <input class="form-check-input" type="radio" value="male" id="male" {...register('preference_gender')}/>
+                <label class="form-check-label" for="male">homme</label>
+              </div>
+              <div>
+              <input class="form-check-input" type="radio" value="female" id="female" {...register('preference_gender')}/>
+              <label class="form-check-label" for="female">femme</label>
+              </div>
+              <div>
+              <input class="form-check-input" type="radio" value="bi" id="bi" {...register('preference_gender')}/>
+              <label class="form-check-label" for="bi">Bisexuel</label>
+              </div>
+            </div>
+          </label>
+            
+        </div>
+
+        
+        <button type="submit" className="btn btn-dark btn-lg btn-block" id="submit_button">Mettre a jour le profil</button>
+      </form>
       </div>
     );
   }
+
+  
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    console.error("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+  document.getElementById("longitude").value = position.coords.longitude
+  document.getElementById("latitude").value = position.coords.latitude
+  return {latitude: position.coords.latitude, longitude: position.coords.longitude};
+}
+
+
+
+
+
+
+function submit(state, userList) {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position)=>{
+      userList.preference_gender = state.preference_gender;
+      userList.longitude = position.coords.longitude;
+      userList.latitude = position.coords.latitude;
+      userList.zone_recherche = state.searchRange;
+      userList.age_min = state.age_min;
+      userList.age_max = state.age_max;
+      console.log(userList)
+
+  const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', "authorization": getCookie("token")},
+      body: JSON.stringify(userList)
+  };
+  fetch('http://localhost:3001/api/profile/recherche/'+getCookie("userId"), requestOptions)
+      .then(async response1 => {
+        fetch('http://localhost:3001/api/profile/localisation/'+getCookie("userId"), requestOptions)
+          .then(async response2 => {
+
+          })
+      })
+
+
+    })
+  }
+}
+    
+
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }

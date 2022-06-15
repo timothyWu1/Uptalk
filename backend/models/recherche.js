@@ -26,13 +26,12 @@ class Recherche {
   };
 
   static updateRechercheById = async (user_id, preference_gender, zone_recherche, age_min, age_max) => {
+    
     const sql = "UPDATE recherche SET preference_gender = ?, zone_recherche = ?, age_min = ?, age_max = ? WHERE user_id = ?";
-    var values = [preference_gender, zone_recherche, gender, age_min, age_max, user_id] 
+    var values = [preference_gender, zone_recherche, age_min, age_max, user_id] 
 
-    mysql.query(sql, values, function (err, result) {
-      if (err) throw err;
-      return result;
-    });
+    const result = mysql.query(sql, values).catch((err) => err.message);
+    return typeof result === "string" ? result : result[0];
   };
 
 } 

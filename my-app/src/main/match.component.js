@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import '../index.css';
 const Math = require("mathjs")
+
 
 
 
@@ -42,43 +44,50 @@ export default function Match() {
     if (userList[count] !== undefined){
         return (
         <div>
-            <div className="card"> 
-                <div className="center">
-                    {userList[count].firstname} {getAge(userList[count].birthday)}
-                </div>
-                <div className="localisation"></div>
+            <div className="card match-card"> 
+                <div>
+                    <h1 className="content">
+                        {userList[count].firstname} {getAge(userList[count].birthday)}
+                    </h1>
+                    <div className="localisation"></div>
 
-                <div className="bio">
-                    {userList[count].bio}
-                </div>
-                <div className="Interet">
-                    {userList[count].interet[0].name}
-                    {userList[count].interet[1].name}
-                    {userList[count].interet[2].name}
-                    {userList[count].interet[3].name}
-                    {userList[count].interet[4].name}
-                </div>
-                <div className="Question">
-                    {userList[count].question[0].name}
-                </div>
-                <div className="Reponse">
-                    {userList[count].question[0].reponse}
-                </div>
-                <div className="Question">
-                    {userList[count].question[1].name}
-                </div>
-                <div className="Reponse">
-                    {userList[count].question[1].reponse}
-                </div>
-                <div className="Question">
-                    {userList[count].question[2].name}
-                </div>
-                <div className="Reponse">
-                    {userList[count].question[2].reponse}
+                    <div className="bio card-body">
+                        {userList[count].bio}
+                    </div>
+                    <div className="Interet content"> 
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item flex-fill">{userList[count].interet[0].name}</li>
+                            <li class="list-group-item flex-fill">{userList[count].interet[1].name}</li>
+                            <li class="list-group-item flex-fill">{userList[count].interet[2].name}</li>
+                            <li class="list-group-item flex-fill">{userList[count].interet[3].name}</li>
+                            <li class="list-group-item flex-fill">{userList[count].interet[4].name}</li>
+                        </ul>
+
+                        
+                    </div>
+                    <div className="Question">
+                        {userList[count].question[0].name}
+                    </div>
+                    <div className="Reponse">
+                        {userList[count].question[0].reponse}
+                    </div>
+                    <div className="Question">
+                        {userList[count].question[1].name}
+                    </div>
+                    <div className="Reponse">
+                        {userList[count].question[1].reponse}
+                    </div>
+                    <div className="Question">
+                        {userList[count].question[2].name}
+                    </div>
+                    <div className="Reponse">
+                        {userList[count].question[2].reponse}
+                    </div>
                 </div>
             </div>
-            <div className="card">
-                <button onClick={() => setCount(count + like(count, "dislike", userList))}>Dislike</button> <button onClick={() => setCount(count + like(count, "like", userList))}>Like</button>
+            <div className="card like-card">
+                <button type="button"  className="btn btn-default btn-like" onClick={() => setCount(count + like(count, "dislike", userList))}>Dislike</button> 
+                <button type="button" className="btn btn-default btn-like"  onClick={() => setCount(count + like(count, "like", userList))}>Like</button>
             </div>
         </div>
         );

@@ -43,7 +43,7 @@ export default function Biographie() {
 
           <div className="form-group">
             <textarea name="biographie"
-              {...register("bio", { required: true, maxLength: 50, minLength: 2 })}
+              {...register("bio", { required: true, maxLength: 300, minLength: 50 })}
               class="form-control"
               placeholder="Biographie"
               id="floatingTextarea2"
@@ -54,7 +54,7 @@ export default function Biographie() {
             type="submit"
             className="btn btn-dark btn-lg btn-block"
             id="submit_button"
-            >Register</button>
+            >Mettre a jour le profil</button>
         </form>
       </div>
     );
@@ -83,7 +83,8 @@ function submit(state, userList) {
 
 
         userList.bio = bio;
-
+        console.log(userList)
+ 
             //blockage du bruteforce 
         const requestOptions = {
             method: 'POST',
