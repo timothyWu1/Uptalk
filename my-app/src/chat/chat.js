@@ -58,7 +58,7 @@ export default function Match() {
 
     return (
     <div className="message-app">
-        <nav class="navbar fixed-top navbar-light bg-light">
+        <nav class="navbar fixed-top navbar-light bg-light nav-message">
             {/* <a class="nav-link" href="/setup">profil</a> */}
             <a class="nav-link" href="/">home</a>
             <p>{target_name}</p>

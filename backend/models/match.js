@@ -39,15 +39,16 @@ class Match {
     let now = new Date()
 
     var user_age = 0
-
+      if (user_profile.birthday != null) {
     
-      var month_diff = (now.getTime() - user_profile.birthday.getTime())
-      //convert the calculated difference in date format  
-      var age_dt = new Date(month_diff);  
-      //extract year from date      
-      var year = age_dt.getUTCFullYear();  
-      //now calculate the age of the user  
-      user_age = Math.abs(year - 1970);   
+        var month_diff = (now.getTime() - user_profile.birthday.getTime())
+        //convert the calculated difference in date format  
+        var age_dt = new Date(month_diff);  
+        //extract year from date      
+        var year = age_dt.getUTCFullYear();  
+        //now calculate the age of the user  
+        user_age = Math.abs(year - 1970);   
+      }
     
 
     //--------------------target preferences age de la target

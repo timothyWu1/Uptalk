@@ -10,6 +10,21 @@ function App() {
   if (getCookie("userId") !== ""){
     return (
       <div className="App">
+        <div class="area" >
+
+          <ul class="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+            
         <nav class="navbar navbar-expand-lg navbar-dark shadow-5-strong">
           <div class="container-fluid">
             <div>
@@ -24,11 +39,27 @@ function App() {
           </div>
         </nav>
           <Match/>
+
+          
+       </div >
       </div>
     );
   } else {
     return (
-      <div>
+      <div class="area" >
+
+        <ul class="circles">
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+        
         <div>
           <a href="/login" role="button" className="login_button btn btn-primary" >Connexion</a>
         </div>
@@ -38,6 +69,7 @@ function App() {
         <div className="card desc">
           Description du site
         </div>
+        </ul>
       </div>
     )
   } 

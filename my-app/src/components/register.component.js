@@ -18,7 +18,7 @@ export default function SignUp() {
         <form className="registerform" onSubmit={handleSubmit(onSubmit)}>
           <h1>Register</h1>
           <div className="form-group ">
-                        <label>Lastname
+                        <label>Email
                             <input className="inputform" {...register("email", { required: true, maxLength: 20 })} type="text" placeholder="Enter email"/>
                         </label>
                     </div>
