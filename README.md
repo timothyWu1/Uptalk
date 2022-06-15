@@ -1,15 +1,19 @@
 ## Lien du GitHub : https://github.com/timothyWu1/Uptalk
 L’objectif du projet est de réaliser un site de rencontre basé sur l’exemple de tinder. La différence réside lors de la sélection des profils qui ne contient aucune photo.
+
 L’idée est d’avoir une alternative a Tinder plus orienté sur le caractère des personnes, chose qu’on ne trouve pas ou peu sur les applications de rencontre.
 L’utilisateur peut créer un compte. Il indique son nom, son prénom, son courriel, son mot de passe, sa date de naissance, son sexe et sa photo.
 Ensuite il indique ses préférences (localisation, Age, préférence sexuelle).
 Par la suite l’utilisateur doit remplir son profil, il rentre une biographie, choisit ses centres d’intérêt depuis une liste définie et choisit de répondre à 3 questions parmi une liste de questions définies.
+
 Viens par la suite la sélection de profil :
 Un profil est affiché, l’utilisateur peut voir sa biographie, ses centres d’intérêt et les questions auquel l’utilisateur a répondu.
 Comme sur Tinder il peut choisir de liker ou non un profil.
+
 Les profils seront affichés en fonction des préférences de l’utilisateur, mais aussi de ses centres d’intérêt et des profils qu’il a précédemment sélectionnés.
 Si l’utilisateur like un profil, ce profil auras plus de chance d’apparaitre sur l’algorithme de l’autre utilisateur.
 Si deux utilisateurs se sont mutuellement likés, alors il y a un match.
+
 Ils peuvent alors communiquer via une page de messagerie.
 Au bout d’un certain nombre de messages échangés l’application propose aux utilisateurs de d’échanger leurs photos.
 Ensuite les utilisateurs sont libres de continuer à communiquer ou non.
